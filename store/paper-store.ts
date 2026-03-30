@@ -202,12 +202,12 @@ export const usePaperStore = create<PaperStore>((set, get) => ({
     return true;
   },
 
-  /** ดึง paper submissions ทั้งหมดจาก DB (ใช้แสดงใน paper-tracker.tsx) */
   fetchSubmissions: async () => {
     set({ isLoading: true });
     const { data } = await supabase
       .from('paper_submissions')
       .select('*')
+      .order('year', { ascending: false })
       .order('created_at', { ascending: false });
     if (data) set({ submissions: data as PaperSubmission[] });
     set({ isLoading: false });

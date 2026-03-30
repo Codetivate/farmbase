@@ -1,0 +1,7 @@
+{
+  "extraPaths": [
+    "./ai-engine"
+  ],
+  "venvPath": "./ai-engine",
+  "venv": "venv"
+}

@@ -1,0 +1,312 @@
+{
+  "info": {
+    "description": "Farmbase Synthetic Berry Detection Dataset",
+    "version": "1.0",
+    "year": 2026,
+    "contributor": "Farmbase AI Engine",
+    "date_created": "2026-03-29 18:03:56"
+  },
+  "licenses": [
+    {
+      "id": 1,
+      "name": "Farmbase Internal",
+      "url": ""
+    }
+  ],
+  "categories": [
+    {
+      "id": 0,
+      "name": "green",
+      "supercategory": "berry"
+    },
+    {
+      "id": 1,
+      "name": "white",
+      "supercategory": "berry"
+    },
+    {
+      "id": 2,
+      "name": "blush",
+      "supercategory": "berry"
+    },
+    {
+      "id": 3,
+      "name": "ripe",
+      "supercategory": "berry"
+    },
+    {
+      "id": 4,
+      "name": "overripe",
+      "supercategory": "berry"
+    }
+  ],
+  "images": [
+    {
+      "id": 0,
+      "file_name": "frame_000000.png",
+      "width": 640,
+      "height": 640,
+      "camera": {
+        "cam_pos": [
+          -0.076,
+          0.148,
+          1.686
+        ],
+        "target": [
+          -0.041,
+          0.003,
+          1.005
+        ],
+        "focal_mm": 28.8
+      }
+    },
+    {
+      "id": 1,
+      "file_name": "frame_000001.png",
+      "width": 640,
+      "height": 640,
+      "camera": {
+        "cam_pos": [
+          -0.591,
+          0.353,
+          1.621
+        ],
+        "target": [
+          -0.138,
+          -0.089,
+          0.535
+        ],
+        "focal_mm": 26.1
+      }
+    },
+    {
+      "id": 2,
+      "file_name": "frame_000002.png",
+      "width": 640,
+      "height": 640,
+      "camera": {
+        "cam_pos": [
+          -0.105,
+          0.28,
+          1.104
+        ],
+        "target": [
+          -0.004,
+          0.131,
+          0.57
+        ],
+        "focal_mm": 49.4
+      }
+    },
+    {
+      "id": 3,
+      "file_name": "frame_000003.png",
+      "width": 640,
+      "height": 640,
+      "camera": {
+        "cam_pos": [
+          0.744,
+          0.131,
+          1.13
+        ],
+        "target": [
+          -0.03,
+          -0.124,
+          0.345
+        ],
+        "focal_mm": 34.3
+      }
+    },
+    {
+      "id": 4,
+      "file_name": "frame_000004.png",
+      "width": 640,
+      "height": 640,
+      "camera": {
+        "cam_pos": [
+          -0.744,
+          0.269,
+          0.324
+        ],
+        "target": [
+          -0.321,
+          -0.137,
+          0.408
+        ],
+        "focal_mm": 25.5
+      }
+    }
+  ],
+  "annotations": [
+    {
+      "id": 0,
+      "image_id": 0,
+      "category_id": 3,
+      "bbox": [
+        0,
+        105.9,
+        5.4,
+        218.5
+      ],
+      "area": 1177.2,
+      "iscrowd": 0,
+      "attributes": {
+        "ripeness": "ripe",
+        "tier": 4
+      }
+    },
+    {
+      "id": 1,
+      "image_id": 0,
+      "category_id": 1,
+      "bbox": [
+        577.2,
+        598.4,
+        41.7,
+        41.6
+      ],
+      "area": 1738.3,
+      "iscrowd": 0,
+      "attributes": {
+        "ripeness": "white",
+        "tier": 3
+      }
+    },
+    {
+      "id": 2,
+      "image_id": 1,
+      "category_id": 3,
+      "bbox": [
+        93.6,
+        600.3,
+        54.9,
+        39.7
+      ],
+      "area": 2181.4,
+      "iscrowd": 0,
+      "attributes": {
+        "ripeness": "ripe",
+        "tier": 3
+      }
+    },
+    {
+      "id": 3,
+      "image_id": 1,
+      "category_id": 4,
+      "bbox": [
+        631.6,
+        603.0,
+        8.4,
+        25.2
+      ],
+      "area": 210.8,
+      "iscrowd": 0,
+      "attributes": {
+        "ripeness": "overripe",
+        "tier": 2
+      }
+    },
+    {
+      "id": 4,
+      "image_id": 1,
+      "category_id": 3,
+      "bbox": [
+        537.7,
+        474.0,
+        40.4,
+        45.9
+      ],
+      "area": 1857.1,
+      "iscrowd": 0,
+      "attributes": {
+        "ripeness": "ripe",
+        "tier": 3
+      }
+    },
+    {
+      "id": 5,
+      "image_id": 1,
+      "category_id": 1,
+      "bbox": [
+        270.6,
+        99.4,
+        93.4,
+        106.1
+      ],
+      "area": 9906.4,
+      "iscrowd": 0,
+      "attributes": {
+        "ripeness": "white",
+        "tier": 4
+      }
+    },
+    {
+      "id": 6,
+      "image_id": 1,
+      "category_id": 4,
+      "bbox": [
+        473.0,
+        213.9,
+        39.6,
+        45.0
+      ],
+      "area": 1780.3,
+      "iscrowd": 0,
+      "attributes": {
+        "ripeness": "overripe",
+        "tier": 4
+      }
+    },
+    {
+      "id": 7,
+      "image_id": 2,
+      "category_id": 1,
+      "bbox": [
+        499.4,
+        507.6,
+        140.6,
+        132.4
+      ],
+      "area": 18617.7,
+      "iscrowd": 0,
+      "attributes": {
+        "ripeness": "white",
+        "tier": 2
+      }
+    },
+    {
+      "id": 8,
+      "image_id": 4,
+      "category_id": 3,
+      "bbox": [
+        630.8,
+        38.9,
+        9.2,
+        45.7
+      ],
+      "area": 422.3,
+      "iscrowd": 0,
+      "attributes": {
+        "ripeness": "ripe",
+        "tier": 1
+      }
+    },
+    {
+      "id": 9,
+      "image_id": 4,
+      "category_id": 3,
+      "bbox": [
+        611.2,
+        0,
+        15.6,
+        5.0
+      ],
+      "area": 78.4,
+      "iscrowd": 0,
+      "attributes": {
+        "ripeness": "ripe",
+        "tier": 3
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+# Farmbase Synthetic Berry Detection Dataset
+# Generated: 2026-03-29 18:03:57
+# Images: 5
+# Annotations: 10
+
+path: C:\Users\nesnk\Desktop\Farmbase\farmbase\ai_engine\isaac_bridge\output\sdg_dataset
+train: images
+val: images
+
+nc: 5
+names:
+  0: green
+  1: white
+  2: blush
+  3: ripe
+  4: overripe

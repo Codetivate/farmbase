@@ -11,11 +11,17 @@ import {
   FileText,
   Shield,
   Eye,
+  EyeOff,
   MessageSquareWarning,
   Send,
   Loader as Loader2,
   CircleCheck as CheckCircle,
   ChevronRight,
+  FlaskConical,
+  Mail,
+  Lock,
+  ArrowRight,
+  TriangleAlert as AlertTriangle,
 } from 'lucide-react';
 import { useFarmStore } from '@/store/farm-store';
 import { supabase } from '@/lib/supabase';
@@ -453,6 +459,7 @@ function LoginPopup({ onClose, onLogin }: { onClose: () => void; onLogin: (email
   const { t } = useI18n();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -467,55 +474,191 @@ function LoginPopup({ onClose, onLogin }: { onClose: () => void; onLogin: (email
     setLoading(false);
   };
 
+  const handleGoogleLogin = async () => {
+    setLoading(true);
+    const { error: err } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: `${window.location.origin}`,
+      },
+    });
+    if (err) {
+      setError(err.message);
+      setLoading(false);
+    }
+  };
+
   return (
     <motion.div
-      initial={{ opacity: 0, height: 0 }}
-      animate={{ opacity: 1, height: 'auto' }}
-      exit={{ opacity: 0, height: 0 }}
-      className="overflow-hidden"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[60] flex items-center justify-center"
+      onClick={onClose}
     >
-      <div className="mt-3 rounded-xl border border-amber-500/20 bg-gradient-to-b from-amber-500/5 to-transparent p-4 space-y-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Shield size={12} className="text-amber-400" />
-            <span className="text-[12px] font-semibold text-amber-600 dark:text-amber-300">
-              {t.drawer.loginRequired || 'กรุณาเข้าสู่ระบบ'}
-            </span>
-          </div>
-          <button onClick={onClose} className="p-0.5 rounded hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors">
-            <X size={12} />
+      {/* Backdrop */}
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+
+      {/* Modal */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.9, y: 20 }}
+        transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+        onClick={(e) => e.stopPropagation()}
+        className="relative w-full max-w-md mx-4"
+      >
+        <div className="absolute -inset-px rounded-2xl bg-gradient-to-b from-border/30 to-transparent" />
+        <div className="relative rounded-2xl bg-card/95 backdrop-blur-xl border border-border shadow-2xl overflow-hidden">
+          {/* Close button */}
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 p-1.5 rounded-lg hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors z-10"
+          >
+            <X size={16} />
           </button>
+
+          {/* Header with Logo */}
+          <div className="p-8 pb-6 text-center">
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.1 }}
+              className="inline-flex"
+            >
+              <div className="relative">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500 to-emerald-500 flex items-center justify-center shadow-lg shadow-cyan-500/20">
+                  <FlaskConical size={24} className="text-white" />
+                </div>
+                <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-emerald-400 border-[3px] border-card animate-pulse" />
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15 }}
+              className="mt-5"
+            >
+              <h1 className="text-xl font-bold text-foreground tracking-tight">
+                {t.auth?.welcomeBack || 'ยินดีต้อนรับกลับ'}
+              </h1>
+              <p className="text-sm text-muted-foreground mt-1.5">
+                {t.auth?.signInSubtitle || 'เข้าสู่ระบบเพื่อใช้งาน Farmbase อย่างเต็มรูปแบบ'}
+              </p>
+            </motion.div>
+          </div>
+
+          {/* Form */}
+          <form
+            onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}
+            className="px-8 pb-8 space-y-4"
+          >
+            <div>
+              <label className="block text-xs font-medium text-muted-foreground mb-1.5">{t.auth?.email || 'อีเมล'}</label>
+              <div className="relative">
+                <Mail size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder={t.auth?.emailPlaceholder || 'your@email.com'}
+                  autoFocus
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-secondary/60 border border-border text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/20 transition-all"
+                  autoComplete="email"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium text-muted-foreground mb-1.5">{t.auth?.password || 'รหัสผ่าน'}</label>
+              <div className="relative">
+                <Lock size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder={t.auth?.passwordPlaceholder || '••••••••'}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
+                  className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-secondary/60 border border-border text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/20 transition-all"
+                  autoComplete="current-password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
+                </button>
+              </div>
+            </div>
+
+            <AnimatePresence>
+              {error && (
+                <motion.div
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="flex items-center gap-2 p-3 rounded-xl text-xs bg-red-500/10 border border-red-500/20 text-red-400"
+                >
+                  <AlertTriangle size={14} />
+                  <span>{error}</span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            <button
+              type="submit"
+              disabled={loading || !email || !password}
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-500 hover:to-teal-500 text-white shadow-lg shadow-cyan-500/15 hover:shadow-cyan-500/25 active:scale-[0.98]"
+            >
+              {loading ? (
+                <>
+                  <Loader2 size={16} className="animate-spin" />
+                  <span>{t.auth?.signingIn || 'กำลังเข้าสู่ระบบ...'}</span>
+                </>
+              ) : (
+                <>
+                  <span>{t.auth?.signInBtn || 'เข้าสู่ระบบ'}</span>
+                  <ArrowRight size={16} />
+                </>
+              )}
+            </button>
+
+            <div className="relative my-6 pt-2">
+              <div className="absolute inset-0 flex items-center pt-2">
+                <span className="w-full border-t border-border" />
+              </div>
+              <div className="relative flex justify-center text-[10px] uppercase font-bold tracking-wider pt-2">
+                <span className="bg-card/95 px-2 text-muted-foreground">
+                  {t.header?.farmbase === 'ฟาร์มเบส' ? 'หรือเข้าสู่ระบบด้วย' : 'Or continue with'}
+                </span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleGoogleLogin}
+              disabled={loading}
+              className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl font-semibold text-sm transition-all border border-border bg-card hover:bg-secondary text-foreground active:scale-[0.98]"
+            >
+              <svg viewBox="0 0 24 24" className="w-5 h-5">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+              </svg>
+              <span>Google</span>
+            </button>
+
+            <div className="text-center pt-2">
+              <span className="text-xs text-muted-foreground">
+                {t.auth?.noAccount || 'ยังไม่มีบัญชี? สร้างบัญชีใหม่'}
+              </span>
+            </div>
+          </form>
         </div>
-        <p className="text-[11px] text-muted-foreground">
-          {t.drawer.loginRequiredDesc || 'เข้าสู่ระบบเพื่อรายงานปัญหาเกี่ยวกับงานวิจัย'}
-        </p>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          className="w-full px-3 py-2.5 rounded-xl bg-muted/50 border border-border text-xs text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-amber-500/40"
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
-          className="w-full px-3 py-2.5 rounded-xl bg-muted/50 border border-border text-xs text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-amber-500/40"
-        />
-        {error && (
-          <p className="text-[11px] text-red-400">{error}</p>
-        )}
-        <button
-          onClick={handleSubmit}
-          disabled={!email || !password || loading}
-          className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-[12px] font-semibold transition-all disabled:opacity-40 bg-amber-500/20 border border-amber-500/30 text-amber-600 dark:text-amber-300 hover:bg-amber-500/30 active:scale-[0.97]"
-        >
-          {loading ? <Loader2 size={12} className="animate-spin" /> : <Send size={12} />}
-          {t.drawer.loginBtn || 'เข้าสู่ระบบ'}
-        </button>
-      </div>
+      </motion.div>
     </motion.div>
   );
 }
@@ -668,7 +811,7 @@ export default function ScientificDrawer() {
             year: 2024, journal: "HortScience (ASHS)",
             doi: "10.21273/HORTSCI17587-23",
             url: "https://doi.org/10.21273/HORTSCI17587-23",
-            summary: "Compared Tochiotome vs Koiminori in PFAL. Koiminori had 1.9× higher yield, 2.0× greater dry weight, 2.2× higher photosynthetic rate. Larger leaf area (2.3-3.1×) and higher plant height allowed upper leaves to receive more PPFD.",
+            summary: "Compared Tochiotome vs Koiminori in PFAL. Koiminori had 1.9× higher yield, 2.0× greater dry weight, 2.2× higher photosynthetic rate.",
             confidence_score: 96, created_at: new Date().toISOString()
           },
           {
@@ -678,23 +821,135 @@ export default function ScientificDrawer() {
             year: 2017, journal: "Environmental Control in Biology",
             doi: "10.2525/ecb.55.21",
             url: "https://doi.org/10.2525/ecb.55.21",
-            summary: "Crown-cooling at 20°C with short-day (8h) for 22 days induced earlier flower bud differentiation in Tochiotome and Nyoho even under high air temperatures. Enables stable production during hot autumn.",
+            summary: "Crown-cooling at 20°C with short-day (8h) for 22 days induced earlier flower bud differentiation in Tochiotome. Enables stable production during hot autumn.",
             confidence_score: 94, created_at: new Date().toISOString()
           },
           {
             id: 'verified-straw-3', crop_id: selectedCrop.id,
-            title: "Effects of Varying Electrical Conductivity Levels on Plant Growth, Yield, and Photosynthetic Parameters of Tochiotome Strawberry in a Greenhouse",
+            title: "Effects of Varying Electrical Conductivity Levels on Plant Growth, Yield, and Photosynthetic Parameters of Tochiotome Strawberry",
             authors: "Australian Journal of Crop Science Research Group",
             year: 2025, journal: "Australian Journal of Crop Science (AJCS)",
             doi: "10.21475/ajcs.25.19.04.p322",
             url: "https://doi.org/10.21475/ajcs.25.19.04.p322",
-            summary: "Optimal EC for Tochiotome hydroponic: 2.0-4.0 dS/m. EC >6.0 reduces crown/leaf fresh weight, root length, and fruit weight. Brix and SPAD stable across EC levels but total yield declined at extremes.",
+            summary: "Optimal EC for Tochiotome hydroponic: 2.0-4.0 dS/m. EC >6.0 reduces biomass and fruit weight. Brix and SPAD stable across EC levels.",
             confidence_score: 92, created_at: new Date().toISOString()
           },
+          {
+            id: 'verified-straw-4', crop_id: selectedCrop.id,
+            title: "Effects of Light and Temperature on Photosynthetic Enhancement by High CO2 Concentration of Tochiotome Leaves",
+            authors: "Wada Y., Soeno T., Inaba Y.",
+            year: 2010, journal: "Japanese Journal of Crop Science",
+            doi: "10.1626/jcs.79.192",
+            url: "https://doi.org/10.1626/jcs.79.192",
+            summary: "CO2 enrichment at 800-1000 ppm enhances Tochiotome leaf photosynthesis. Effect strongest under high light/temperature. CO2 >1000 ppm no additional benefit.",
+            confidence_score: 93, created_at: new Date().toISOString()
+          },
+          {
+            id: 'verified-straw-5', crop_id: selectedCrop.id,
+            title: "Propagation and Floral Induction of Transplant for Forcing Long-term Production of Seasonal Flowering Strawberries in Japan",
+            authors: "Yamasaki A.",
+            year: 2020, journal: "The Horticulture Journal (JSHS)",
+            doi: "10.2503/hortj.UTD-R010",
+            url: "https://doi.org/10.2503/hortj.UTD-R010",
+            summary: "Comprehensive review of Japanese strawberry forcing culture. Covers 3 artificial low-temp methods: Yarei, Kaburei, Kanketsu-reizo. Tochiotome is primary cultivar.",
+            confidence_score: 95, created_at: new Date().toISOString()
+          },
+          {
+            id: 'verified-dim-1', crop_id: selectedCrop.id,
+            title: "The Dependence of Calcium Transport and Leaf Tipburn in Strawberry on Relative Humidity and Nutrient Solution Concentration",
+            authors: "Bradfield E.G., Guttridge C.G.",
+            year: 1979, journal: "Annals of Botany",
+            doi: "10.1093/oxfordjournals.aob.a085647",
+            url: "https://doi.org/10.1093/oxfordjournals.aob.a085647",
+            summary: "Seminal study on VPD-guttation-calcium mechanism in strawberry tip-burn. High nighttime RH (low VPD) promotes guttation and calcium transport to young leaves.",
+            confidence_score: 96, created_at: new Date().toISOString()
+          },
+          {
+            id: 'verified-dim-2', crop_id: selectedCrop.id,
+            title: "Vapor Pressure Deficit Control and Mechanical Vibration Techniques to Induce Self-Pollination in Strawberry Flowers",
+            authors: "Liang H., et al.",
+            year: 2025, journal: "Plant Methods",
+            doi: "10.1186/s13007-025-01343-2",
+            url: "https://doi.org/10.1186/s13007-025-01343-2",
+            summary: "VPD 2.06 kPa promotes anther dehiscence. 800Hz vibration detaches pollen, 100Hz attaches to stigma. Effective mechanical pollination strategy for vertical farming.",
+            confidence_score: 95, created_at: new Date().toISOString()
+          },
+          {
+            id: 'verified-dim-3', crop_id: selectedCrop.id,
+            title: "Far-red Light in Sole-source Lighting Can Enhance the Growth and Fruit Production of Indoor Strawberries",
+            authors: "Ries J., Park Y.",
+            year: 2024, journal: "HortScience (ASHS)",
+            doi: "10.21273/HORTSCI17729-24",
+            url: "https://doi.org/10.21273/HORTSCI17729-24",
+            summary: "Adding far-red (730nm) to blue+red LEDs increased fruit yield by 48% and Brix by 12% in Albion strawberry. Crown number increased by 33%.",
+            confidence_score: 97, created_at: new Date().toISOString()
+          },
+          {
+            id: 'verified-dim-4', crop_id: selectedCrop.id,
+            title: "Crop-local CO₂ Enrichment Improves Strawberry Yield and Fuel Use Efficiency in Protected Cultivations",
+            authors: "Hidaka K., Nakahara S., Yasutake D., Zhang Y., Okayasu T., Dan K., Kitano M., Sone K.",
+            year: 2022, journal: "Scientia Horticulturae",
+            doi: "10.1016/j.scienta.2022.111104",
+            url: "https://doi.org/10.1016/j.scienta.2022.111104",
+            summary: "Crop-local CO₂ enrichment increased canopy CO₂ by 100-200 ppm even with open vents. 22% higher marketable yield, 27% less fuel consumption.",
+            confidence_score: 95, created_at: new Date().toISOString()
+          },
+          {
+            id: 'verified-dim-5', crop_id: selectedCrop.id,
+            title: "Heat Load due to LED Lighting of Indoor Strawberry Plantation",
+            authors: "Chaichana C., et al.",
+            year: 2020, journal: "Energy Reports",
+            doi: "10.1016/j.egyr.2019.11.089",
+            url: "https://doi.org/10.1016/j.egyr.2019.11.089",
+            summary: "Quantified sensible/latent heat loads from LED lighting in closed indoor strawberry rooms. Essential data for HVAC/dehumidification system sizing.",
+            confidence_score: 93, created_at: new Date().toISOString()
+          },
+          {
+            id: 'verified-gap-1', crop_id: selectedCrop.id,
+            title: "Development and validation of an innovative algorithm for sodium accumulation management in closed-loop soilless culture systems",
+            authors: "Giannothanasis E., Savvas D., Danai A., Leonardi C.",
+            year: 2024, journal: "Agricultural Water Management",
+            doi: "10.1016/j.agwat.2024.108968",
+            url: "https://doi.org/10.1016/j.agwat.2024.108968",
+            summary: "Algorithm for Na⁺ management in closed-loop hydroponics. Ion-selective electrodes for real-time monitoring. NUE improved 88-94% vs. open-loop. Critical for saline water areas.",
+            confidence_score: 94, created_at: new Date().toISOString()
+          },
+          {
+            id: 'verified-gap-2', crop_id: selectedCrop.id,
+            title: "Plant factories versus greenhouses: Comparison of resource use efficiency",
+            authors: "Graamans L., Baeza E., van den Dobbelsteen A., Tsafaras I., Stanghellini C.",
+            year: 2018, journal: "Agricultural Systems",
+            doi: "10.1016/j.agsy.2017.11.003",
+            url: "https://doi.org/10.1016/j.agsy.2017.11.003",
+            summary: "PFAL uses 247 kWh/kg dry weight vs. greenhouse 70-111 kWh but uses far less water and land. Cooling load is extreme in tropical climates.",
+            confidence_score: 96, created_at: new Date().toISOString()
+          },
+          {
+            id: 'verified-gap-3', crop_id: selectedCrop.id,
+            title: "Environmental and resource use analysis of plant factories with energy technology options: A case study in Japan",
+            authors: "Kikuchi Y., Kanematsu Y., Yoshikawa N., Okubo T., Takagaki M.",
+            year: 2018, journal: "Journal of Cleaner Production",
+            doi: "10.1016/j.jclepro.2018.03.110",
+            url: "https://doi.org/10.1016/j.jclepro.2018.03.110",
+            summary: "Full LCA of plant factories in Japan. PFAL reduces land/water/phosphorus use but energy remains the bottleneck. Solar integration significantly reduces footprint.",
+            confidence_score: 93, created_at: new Date().toISOString()
+          },
+          {
+            id: 'verified-gap-4', crop_id: selectedCrop.id,
+            title: "Advances in strawberry postharvest preservation and packaging: A comprehensive review",
+            authors: "Priyadarshi R., Jayakumar A., Krebs de Souza C., Rhim J.W.",
+            year: 2024, journal: "Comprehensive Reviews in Food Science and Food Safety",
+            doi: "10.1111/1541-4337.13417",
+            url: "https://doi.org/10.1111/1541-4337.13417",
+            summary: "Comprehensive review covering MAP, 1-MCP, ozone, edible coatings (chitosan), and cold chain logistics for strawberry. Shelf life only 2-3 days without proper handling.",
+            confidence_score: 95, created_at: new Date().toISOString()
+          },
         ];
-        setCitations(mockCitations as unknown as ResearchCitation[]);
+        const sortedMock = [...mockCitations].sort((a, b) => b.year - a.year);
+        setCitations(sortedMock as unknown as ResearchCitation[]);
       } else if (data) {
-        setCitations(data as ResearchCitation[]);
+        const sortedData = [...data].sort((a, b) => b.year - a.year);
+        setCitations(sortedData as ResearchCitation[]);
       }
 
       const { count } = await supabase
@@ -852,7 +1107,9 @@ export default function ScientificDrawer() {
                   <span className="text-[11px] text-muted-foreground/50">{t.drawer.reportIssueHint}</span>
                 </div>
                 <div className="space-y-3">
-                  {(citations as CitationWithSource[]).map((c) => (
+                  {[...(citations as CitationWithSource[])]
+                    .sort((a, b) => Number(b.year) - Number(a.year))
+                    .map((c) => (
                     <CitationCard
                       key={c.id}
                       citation={c}

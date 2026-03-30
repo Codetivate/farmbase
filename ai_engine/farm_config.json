@@ -1,0 +1,152 @@
+{
+  "farm_name": "Farmbase 12m² Tochiotome PFAL — Bangpakong, Thailand",
+  "version": "2.0",
+  "research_basis": "18 peer-reviewed papers (DOI-verified, Mar 2026)",
+  "room_specs": {
+    "width_m": 4.0,
+    "depth_m": 3.0,
+    "height_m": 2.8,
+    "area_m2": 12.0,
+    "insulation": "PIR 50mm",
+    "location": "Bangpakong, Chachoengsao, Thailand",
+    "ambient_temp_c": 30,
+    "ambient_rh_pct": 80
+  },
+  "layout_specs": {
+    "rack_count": 2,
+    "rack_length_m": 1.8,
+    "rack_depth_m": 0.4,
+    "center_aisle_width_m": 0.8,
+    "wall_clearance_m": 0.35,
+    "tiers_per_rack": 5,
+    "tier_height_gap_m": 0.35,
+    "first_tier_height_m": 0.30,
+    "gutter_angle_deg": 5.0,
+    "gutter_type": "NFT U-channel flat (Oishii patent, 5° slope for flow)",
+    "plants_per_tier": 14,
+    "total_plants": 140
+  },
+  "climate_systems": {
+    "_source": "Takahashi 2024, Bradfield 1979, Liang 2025, Wada 2010",
+    "target_temperature_day_c": 23.0,
+    "target_temperature_night_c": 18.0,
+    "target_rh_day_pct": 72.0,
+    "target_rh_night_pct": 75.0,
+    "target_vpd_day_kpa": 1.0,
+    "target_vpd_pollination_kpa": 2.06,
+    "target_co2_ppm": 1000,
+    "co2_enrichment_method": "crop-local release at canopy level (Hidaka 2022)",
+    "ac_unit_btu": 12000,
+    "ac_sensible_heat_ratio": 0.55,
+    "_ac_note": "Each LED watt → 0.55W sensible heat for HVAC to remove (Chaichana 2020)",
+    "humidifier_type": "ultrasonic",
+    "dehumidifier_present": true,
+    "_dehumidifier_note": "Condensate recycled as ultra-pure irrigation water (Kikuchi 2018)",
+    "exhaust_fan_cfm": 200,
+    "co2_solenoid_present": true,
+    "airflow_method": "PE perforated duct (Zhang & Kacira 2016)",
+    "target_airflow_ms": 0.4,
+    "_airflow_note": "Uniform 0.3-0.5 m/s at canopy level prevents tip-burn",
+    "cooling_load_kwh_m2_yr": 300,
+    "_cooling_note": "250-350 kWh/m²/yr for tropical PFAL (Graamans 2018)"
+  },
+  "lighting_system": {
+    "_source": "Ries & Park 2024 (DOI: 10.21273/HORTSCI17729-24)",
+    "fixture_type": "Samsung LM301H EVO — Blue+Red+Far-red",
+    "led_spectrum": {
+      "blue_450nm_umol": 90,
+      "red_660nm_umol": 250,
+      "far_red_730nm_umol": 50,
+      "total_eppfd_umol": 390,
+      "_note": "FR (12% of ePPFD) → leaf area +74%, fruit yield +48%, Brix +12%, peduncle +62%"
+    },
+    "watts_per_tier": 40,
+    "total_wattage": 400,
+    "photoperiod_vegetative_hrs": 18,
+    "photoperiod_induction_hrs": 8,
+    "photoperiod_fruiting_hrs": 16,
+    "target_dli_mol_m2_d": 14,
+    "uv_c_protocol": {
+      "timing": "immediately after lights-off",
+      "duration_min": 15,
+      "purpose": "powdery mildew control without chemicals",
+      "_source": "Suthaparan 2020 (DOI: 10.17660/ActaHortic.2020.1296.128)"
+    }
+  },
+  "irrigation_system": {
+    "_source": "AJCS 2025 (DOI: 10.21475/ajcs.25.19.04.p322), Ries 2024",
+    "system_type": "NFT recirculating + drip backup",
+    "main_tank_liters": 100.0,
+    "pump_wattage": 25,
+    "nutrient_formula": {
+      "name": "Yamazaki Modified (Ries 2024)",
+      "N_mg_L": 77,
+      "P_mg_L": 23,
+      "K_mg_L": 116,
+      "Ca_mg_L": 40,
+      "Mg_mg_L": 12,
+      "S_mg_L": 48
+    },
+    "target_ec_vegetative_ds_m": 2.2,
+    "target_ec_fruiting_ds_m": 3.0,
+    "target_ec_brix_boost_ds_m": 4.0,
+    "target_ph": 5.8,
+    "dosing_pumps_count": 3,
+    "water_on_cycle_min": 15,
+    "water_off_cycle_min": 45,
+    "na_monitoring": {
+      "max_na_mmol_L": 2.0,
+      "action_if_exceeded": "drain fraction + RO dilution",
+      "emergency_foliar": "Ca(NO3)2 10mM spray",
+      "_source": "Giannothanasis 2024 (DOI: 10.1016/j.agwat.2024.108968), Yildirim 2009"
+    }
+  },
+  "flower_induction": {
+    "_source": "Hidaka 2017 (DOI: 10.2525/ecb.55.21), Yamasaki 2020",
+    "method": "crown-cooling",
+    "crown_target_temp_c": 20,
+    "ambient_tolerable_c": 30,
+    "short_day_hours": 8,
+    "duration_days": 22,
+    "chiller_kw": 1.5,
+    "cooling_tube_diameter_mm": 16,
+    "alternatives": [
+      "Yarei: short-day + cold darkness (walk-in cooler)",
+      "Kaburei: continuous dark cold storage 5°C for 15-20 days",
+      "Kanketsu-reizo: intermittent cold shock cycles"
+    ]
+  },
+  "pollination": {
+    "_source": "Liang et al. 2025 (DOI: 10.1186/s13007-025-01343-2)",
+    "method": "VPD control + mechanical vibration (no bees needed)",
+    "vpd_target_kpa": 2.06,
+    "vpd_duration_min": 30,
+    "vibration_step_1": {
+      "purpose": "detach pollen from anthers",
+      "frequency_hz": 800,
+      "acceleration_ms2": 40
+    },
+    "vibration_step_2": {
+      "purpose": "attach pollen to stigma",
+      "frequency_hz": 100,
+      "acceleration_ms2": 35
+    },
+    "anther_dehiscence_rate_pct": 100
+  },
+  "post_harvest": {
+    "_source": "Priyadarshi 2024 (DOI: 10.1111/1541-4337.13417)",
+    "pre_cool_temp_c": 2,
+    "pre_cool_time_hrs": 1,
+    "map_o2_pct": 7.5,
+    "map_co2_pct": 17.5,
+    "shelf_life_days": 10,
+    "ozone_sanitization_ppm": 3.5
+  },
+  "robot_integration": {
+    "amr_base_height_m": 0.275,
+    "arm_reach_m": 0.855,
+    "aisle_navigation_target_m": 0.8,
+    "harvest_threshold_ripeness": 0.60,
+    "_fr_benefit": "Far-red extends peduncle +62%, improving robotic detection (Ries 2024)"
+  }
+}

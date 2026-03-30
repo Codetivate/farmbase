@@ -1,0 +1,10 @@
+{
+  "source_directories": [
+    "ai-engine"
+  ],
+  "search_path": [
+    "ai-engine/venv/Lib/site-packages",
+    "ai-engine/venv/Lib",
+    "ai-engine"
+  ]
+}

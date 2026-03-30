@@ -20,7 +20,7 @@ export default function CropDetailView() {
     setSimulationDay,
     goBackToMarketplace,
     setDrawerOpen,
-    openDesignLab,
+
   } = useFarmStore();
   const { t, locale } = useI18n();
   const { formatCurrency, currencySymbol } = useCurrency();
@@ -106,14 +106,7 @@ export default function CropDetailView() {
             <span className="hidden sm:inline">{t.detail.researchPapers}</span>
             <ArrowUpRight size={12} />
           </button>
-          <button
-            onClick={() => openDesignLab(selectedCrop)}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-600 border border-cyan-400 text-xs font-medium text-white transition-all shadow-lg shadow-cyan-500/20"
-          >
-            <Sparkles size={14} />
-            <span className="hidden sm:inline">Design Lab</span>
-            <ArrowUpRight size={12} />
-          </button>
+
         </div>
       </div>
 

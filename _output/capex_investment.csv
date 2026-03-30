@@ -1,0 +1,29 @@
+Category/Item,Quantity,Unit Price (THB),Total Price (THB)
+[Phase 1: Facility & Structure],,,
+  Isowall PIR Panel 4-inch (sq.m.),63.20,800.00,"50,560.00"
+  Epoxy Floor Coating (sq.m.),12.00,400.00,"4,800.00"
+  Sliding Hermetic Cleanroom Door 850x2100,1,"15,000.00","15,000.00"
+  Electrical Control Board & Wiring,1,"12,000.00","12,000.00"
+[Phase 1: HVAC & Climate Control],,,
+  Split AC 12000 BTU,1,"12,000.00","12,000.00"
+  1.5kW Glycol Crown-Cooling Chiller,1,"18,000.00","18,000.00"
+  PE Perforated Duct 200mm (m),2.55,300.00,765.00
+  Cooling Tube 16mm (m),28.00,40.00,"1,120.00"
+  CO2 Tank & Control Solenoid,1,"4,000.00","4,000.00"
+  Industrial Humidifier & Dehumidifier,2,"4,500.00","9,000.00"
+  Exhaust Fan System,1,"1,500.00","1,500.00"
+[Phase 1: Cultivation & Lighting],,,
+  Galvanized Rack (1.8m x 0.4m),2,"2,500.00","5,000.00"
+  PVC NFT Gutter 1.8m (pcs),20,270.00,"5,400.00"
+  Samsung LM301H LED Board Full Spec,10,"1,500.00","15,000.00"
+  Reservoir Tank 100L,1,"1,500.00","1,500.00"
+  Dosing Pump (A/B/pH) & Sensors,1,"8,500.00","8,500.00"
+  RO Filter Unit 400GPD,1,"6,000.00","6,000.00"
+  Strawberry Crowns (Tochiotome),140,25.00,"3,500.00"
+[Phase 2: Automation & AI],,,
+  Overhead XYZ Gantry Profile 2040 & Motors,1,"15,000.00","15,000.00"
+  Intel RealSense D435i / Soft-Gripper,1,"16,000.00","16,000.00"
+  NVIDIA Jetson Orin Nano,1,"18,000.00","18,000.00"
+  BIM IOT Sensor Node,60,500.00,"30,000.00"
+------------------------------,----------,---------------,--------------------
+CAPEX GRAND TOTAL,,,"252,645.00"

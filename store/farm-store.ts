@@ -42,7 +42,7 @@ interface EnvironmentState {
   light: number;
 }
 
-export type ViewMode = 'marketplace' | 'detail' | 'papers' | 'login' | 'design-lab' | 'procurement' | 'operations';
+export type ViewMode = 'marketplace' | 'detail' | 'papers' | 'login' | 'procurement' | 'control-room';
 
 /** State + Actions ทั้งหมดของ farm store */
 interface FarmStore {
@@ -66,7 +66,7 @@ interface FarmStore {
   setDrawerOpen: (open: boolean) => void;
   setViewMode: (mode: ViewMode) => void;
   openCropDetail: (crop: Crop) => void;
-  openDesignLab: (crop: Crop) => void;
+
   goBackToMarketplace: () => void;
 }
 
@@ -139,22 +139,6 @@ export const useFarmStore = create<FarmStore>()(
       };
     }),
 
-  /** เปิดหน้า Parametric Design Lab สำหรับพืชที่เลือก */
-  openDesignLab: (crop) =>
-    set(() => {
-      const opt = crop.optimal_conditions;
-      return {
-        selectedCrop: crop,
-        viewMode: 'design-lab',
-        environment: {
-          temperature: opt.temperature.optimal,
-          humidity: opt.humidity.optimal,
-          co2: opt.co2.optimal,
-          light: opt.light.optimal,
-        },
-        simulationDay: 1,
-      };
-    }),
 
   /** กลับไปหน้า marketplace + ปิด drawer */
   goBackToMarketplace: () =>

@@ -16,9 +16,9 @@ import ScientificDrawer from '@/features/discovery/scientific-drawer';
 import PaperTracker from '@/features/papers/paper-tracker';
 import LoginPage from '@/features/auth/login-page';
 import ScrollToTop from '@/features/discovery/scroll-to-top';
-import DesignLabView from '@/features/parametric/design-lab-view';
+
 import ProcurementDashboard from '@/features/procurement/procurement-dashboard';
-import OperationsDashboard from '@/features/operations/operations-dashboard';
+import ControlRoomDashboard from '@/features/control-room/control-room-dashboard';
 
 function MarketplaceView() {
   const { t } = useI18n();
@@ -155,9 +155,19 @@ function App() {
           {viewMode === 'detail' && <DetailView key="detail" />}
           {viewMode === 'papers' && <PapersView key="papers" />}
           {viewMode === 'login' && <LoginView key="login" />}
-          {viewMode === 'design-lab' && <DesignLabView key="design-lab" />}
+
           {viewMode === 'procurement' && <ProcurementDashboard key="procurement" />}
-          {viewMode === 'operations' && <OperationsDashboard key="operations" />}
+          {viewMode === 'control-room' && (
+            <motion.div
+              key="control-room"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.35 }}
+            >
+              <ControlRoomDashboard />
+            </motion.div>
+          )}
         </AnimatePresence>
       </main>
 

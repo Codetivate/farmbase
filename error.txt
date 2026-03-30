@@ -1,0 +1,17 @@
+Initialising login role...
+Connecting to remote database...
+Do you want to push these migrations to the remote database?
+ • 20260330142454_cleanup_duplicates.sql
+
+ [Y/n] y
+Applying migration 20260330142454_cleanup_duplicates.sql...
+ERROR: function min(uuid) does not exist (SQLSTATE 42883)                                        
+At statement: 0                                                                                  
+-- Migration: cleanup_duplicates                                                                 
+-- Description: Removes duplicate entries and fixes foreign keys                                 
+                                                                                                 
+-- 1. Identify the 'master' (oldest) paper_submissions for each DOI and update research_citations
+WITH master_subs AS (                                                                            
+  SELECT doi, MIN(id) as master_id                                                               
+              ^                                                                                  
+Try rerunning the command with --debug to troubleshoot the error.

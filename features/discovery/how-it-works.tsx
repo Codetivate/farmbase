@@ -19,8 +19,8 @@ export default function HowItWorks() {
     },
     {
       icon: Cuboid,
-      title: t.howItWorks?.step2Title || "2. Parametric Design Lab",
-      desc: t.howItWorks?.step2Desc || "Generate 3D structural blueprints.",
+      title: t.howItWorks?.step2Title || "2. Digital Twin (Isaac Sim)",
+      desc: t.howItWorks?.step2Desc || "Simulate your farm in NVIDIA Isaac Sim.",
       color: 'text-indigo-400',
       bg: 'bg-indigo-500/10',
       border: 'border-indigo-500/20',

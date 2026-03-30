@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FlaskConical, FileSearch, Sprout, LogOut, ChevronDown, Shield, Crown, LogIn, Coffee, Settings, Package } from 'lucide-react';
+import { FlaskConical, FileSearch, Sprout, LogOut, ChevronDown, Shield, Crown, LogIn, Coffee, Settings, Package, Gauge } from 'lucide-react';
 import { useFarmStore } from '@/store/farm-store';
 import { useAuth } from '@/lib/auth-context';
 import { useI18n } from '@/lib/i18n/i18n-context';
@@ -107,6 +107,24 @@ export default function Header() {
                 )}
               </button>
             )}
+            <button
+              onClick={() => setViewMode('control-room')}
+              className={`relative flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                viewMode === 'control-room'
+                  ? 'text-foreground'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              <Gauge size={14} />
+              <span>Control Room</span>
+              {viewMode === 'control-room' && (
+                <motion.div
+                  layoutId="header-tab-indicator"
+                  className="absolute bottom-0 left-3 right-3 h-[2px] rounded-full bg-cyan-500 dark:bg-cyan-400"
+                  transition={{ type: 'spring', stiffness: 500, damping: 35 }}
+                />
+              )}
+            </button>
           </div>
         </nav>
 
@@ -187,6 +205,13 @@ export default function Header() {
                         >
                           <Package size={13} className="text-muted-foreground" />
                           {locale === 'th' ? 'บันทึกไว้' : 'My Favourite'}
+                        </button>
+                        <button
+                          onClick={() => { setViewMode('control-room'); setMenuOpen(false); }}
+                          className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs text-foreground hover:bg-secondary transition-colors text-left"
+                        >
+                          <Gauge size={13} className="text-muted-foreground" />
+                          Control Room
                         </button>
                         <button
                           onClick={() => { signOut(); setMenuOpen(false); }}

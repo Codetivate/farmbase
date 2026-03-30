@@ -1,0 +1,108 @@
+{
+  "_comment": "Farmbase Micro PFAL — Shared config for Isaac Sim scene generation",
+  "_version": "0.1.0",
+  "_role_models": ["Oishii", "Plenty", "Zordi"],
+
+  "room": {
+    "width": 2.0,
+    "depth": 2.0,
+    "height": 2.8,
+    "wall_thickness": 0.05,
+    "insulation": "PIR_50mm",
+    "floor_material": "epoxy_white"
+  },
+
+  "racks": {
+    "count": 1,
+    "tiers_per_rack": 3,
+    "tier_heights": [0.40, 0.80, 1.20],
+    "gutter": {
+      "length": 1.50,
+      "width": 0.100,
+      "depth": 0.040,
+      "material": "pvc_white"
+    },
+    "post": {
+      "profile": "25x25x1.5",
+      "material": "steel_galvanized"
+    },
+    "plant_spacing": 0.200,
+    "plants_per_gutter": 7
+  },
+
+  "lighting": {
+    "type": "LED_full_spectrum",
+    "model": "Samsung_LM301H",
+    "watts_per_bar": 40,
+    "ppfd_target": 450,
+    "photoperiod_hours": 16,
+    "spectrum": {
+      "red_nm": 660,
+      "blue_nm": 450,
+      "ratio_rb": "6:1",
+      "ref": "EB 2025"
+    }
+  },
+
+  "climate": {
+    "temperature_c": 20.0,
+    "humidity_rh": 85,
+    "co2_ppm": 900,
+    "vpd_kpa_target": 0.8,
+    "ac_btu": 12000,
+    "ref": "Naphrom 2025, Yu 2023, Wada 2010"
+  },
+
+  "irrigation": {
+    "system": "NFT",
+    "tank_liters": 60,
+    "pump_watts": 25,
+    "ec_target": 2.0,
+    "ph_target": 5.8,
+    "ref": "AJCS 2025"
+  },
+
+  "crop": {
+    "variety": "Tochiotome",
+    "cycle_days": 120,
+    "yield_kg_per_plant": 0.025,
+    "berry_weight_g": 25,
+    "harvest_method": "manual",
+    "pollination": "manual_brush",
+    "ref": "Whitaker 2025, Hidaka 2017"
+  },
+
+  "robot": {
+    "type": "AMR_harvester",
+    "base": "differential_drive",
+    "arm_dof": 6,
+    "arm_model": "generic_6dof",
+    "gripper": "stem_snip_parallel",
+    "camera": {
+      "model": "Intel_RealSense_D435",
+      "resolution": [640, 480],
+      "fps": 30,
+      "mount": "wrist"
+    },
+    "sensor": {
+      "lidar_2d": true,
+      "imu": true
+    },
+    "ref": "Dogtooth 2024, Xiong 2024"
+  },
+
+  "isaac_sim": {
+    "up_axis": "Z",
+    "units": "meters",
+    "physics_dt": 0.016666,
+    "render_dt": 0.016666,
+    "gravity": [0, 0, -9.81],
+    "output_usd": "farm_scene.usd"
+  },
+
+  "budget": {
+    "tier": 1,
+    "total_thb": 35000,
+    "currency": "THB"
+  }
+}
