@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FlaskConical, FileSearch, Sprout, LogOut, ChevronDown, Shield, Crown, LogIn, Coffee, Settings, Package, Gauge } from 'lucide-react';
+import { FlaskConical, FileSearch, Sprout, LogOut, ChevronDown, Shield, Crown, LogIn, Coffee, Package, Gauge } from 'lucide-react';
 import { useFarmStore } from '@/store/farm-store';
 import { useAuth } from '@/lib/auth-context';
 import { useI18n } from '@/lib/i18n/i18n-context';
@@ -22,17 +22,12 @@ export default function Header() {
   const { t, locale } = useI18n();
   const [menuOpen, setMenuOpen] = useState(false);
   const [coffeeOpen, setCoffeeOpen] = useState(false);
-  const [settingsOpen, setSettingsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const settingsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
         setMenuOpen(false);
-      }
-      if (settingsRef.current && !settingsRef.current.contains(e.target as Node)) {
-        setSettingsOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClick);
@@ -232,7 +227,7 @@ export default function Header() {
               </div>
             </>
           ) : (
-            <div ref={settingsRef} className="relative flex items-center gap-2">
+            <div className="relative flex items-center gap-2">
               <button
                 onClick={() => setViewMode('login')}
                 className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-500 hover:to-teal-500 text-white shadow-lg shadow-cyan-500/15 hover:shadow-cyan-500/25 active:scale-[0.98]"
@@ -240,30 +235,6 @@ export default function Header() {
                 <LogIn size={14} />
                 <span>{t.header.signIn}</span>
               </button>
-
-              <button
-                onClick={() => setSettingsOpen(!settingsOpen)}
-                className="p-2 rounded-lg hover:bg-secondary text-muted-foreground hover:text-foreground border border-transparent hover:border-border transition-all"
-              >
-                <Settings size={15} />
-              </button>
-
-              <AnimatePresence>
-                {settingsOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 5, scale: 0.97 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 5, scale: 0.97 }}
-                    transition={{ duration: 0.15 }}
-                    className="absolute right-0 top-full mt-1.5 w-64 rounded-xl border border-border bg-popover/95 backdrop-blur-xl shadow-xl overflow-hidden"
-                  >
-                    <div className="p-3">
-                      <p className="text-[9px] text-muted-foreground font-medium uppercase tracking-wider mb-2">Theme</p>
-                      <ThemeToggle />
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </div>
           )}
         </div>

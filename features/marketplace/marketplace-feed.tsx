@@ -31,7 +31,7 @@ export default function MarketplaceFeed() {
             benefit_summary_en: "Rich in Vitamin C, high antioxidants, and supports immune system. Tochiotome variety offers a perfect balance of sweetness and acidity with Brix up to 12-15%.",
             benefit_summary_th: "อุดมไปด้วยวิตามินซี สารต้านอนุมูลอิสระสูง และช่วยเสริมสร้างระบบภูมิคุ้มกัน สายพันธุ์โทะจิโอะโทะเมะ (Tochiotome) ให้ผลที่มีความหวาน Brix สูง 12-15% เนื้อแน่น",
             optimal_conditions: {
-              temperature: { optimal: 15, min: 8, max: 25, unit: '°C' },
+              temperature: { optimal: 24, min: 10, max: 28, unit: '°C' },
               humidity: { optimal: 65, min: 60, max: 75, unit: '%' },
               co2: { optimal: 800, min: 400, max: 1200, unit: 'ppm' },
               light: { optimal: 450, min: 300, max: 600, unit: 'μmol' },
