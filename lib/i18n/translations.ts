@@ -340,6 +340,7 @@ export interface Translations {
     step4Desc: string;
   };
   controlRoom: {
+    title: string;
     projects: string;
     newProject: string;
     monitoring: string;
@@ -574,16 +575,16 @@ export const th: Translations = {
     harvest: 'เก็บเกี่ยว (Harvest)',
     harvestMushroomDesc: 'เก็บเกี่ยวเมื่อหมวกเห็ดเริ่มแบนก่อนสปอร์หลุด ตัดที่โคนเป็นกลุ่ม ผลผลิตที่คาดหวัง:',
     startSeeds: 'ระยะทำใบ (Vegetative Growth)',
-    startSeedsDesc: 'นำต้นไหลปลอดโรคปลูกใน Deep Water Culture ตั้ง LED: Blue 90 + Red 250 + Far-red 50 µmol/m²/s (Ries 2024) ใช้สูตร Yamazaki N77/P23/K116/Ca40 mg/L ควบคุมลมสม่ำเสมอ 0.3-0.5 m/s ผ่านท่อ PE เจาะรู (Zhang & Kacira 2016) เฝ้าระวัง Na⁺ < 2 mmol/L สำหรับน้ำบางปะกง (Giannothanasis 2024)',
+    startSeedsDesc: '1. ลงกล้า: นำต้นไหลปลอดโรคปลูกกระถาง DWC 2. จัดแสง: เปิด LED Blue 90 + Red 250 + Far-red 50 µmol/m²/s (Ries 2024) 3. ฟีดปุ๋ย: สูตร Yamazaki และคุมโซเดียมน้ำ (Giannothanasis 2024) 4. เป่าลม: 0.3-0.5 m/s ผ่านท่อดักท์ PE (Zhang & Kacira 2016)',
     transplantSeedlings: 'การกระตุ้นตาดอก (Flower Induction)',
-    transplantSeedlingsDesc: 'เทคนิค Crown-cooling: ทำเย็นเฉพาะจุดยอดที่ 20°C + วันสั้น 8 ชม. นาน 22 วัน แม้อากาศรอบข้าง 30°C ก็กระตุ้นตาดอกสำเร็จ (Hidaka 2017) ทางเลือก: Kaburei เก็บเย็นมืดต่อเนื่อง 5°C / Kanketsu-reizo สลับร้อน-เย็น (Yamasaki 2020)',
+    transplantSeedlingsDesc: 'ไม่ต้องรอหน้าหนาว! ใช้ Crown-cooling เปิดน้ำเย็น 20°C หล่อเฉพาะโคนต้น + ตั้งเวลาไฟให้รับวันสั้น (8 ชม.) ต่อเนื่อง 22 วัน จะบังคับให้ต้นแทงตาดอกได้แม้อากาศภายนอกจะร้อนถึง 30°C (Hidaka 2017)',
     optimizeEnvironment: 'ระยะออกดอกและติดผล (Flowering & Fruiting)',
-    optimizeEnvironmentDesc: 'ผสมเกสรด้วย VPD 2.06 kPa + สั่น 800Hz เขย่าเกสร แล้วสั่น 100Hz ติดยอดเกสรตัวเมีย ไม่ต้องใช้ผึ้ง (Liang 2025) เพิ่ม CO₂ เฉพาะระดับต้น 800-1000 ppm เพิ่มผลผลิต 22% (Hidaka 2022) EC 2.0-4.0 dS/m (AJCS 2025)',
+    optimizeEnvironmentDesc: '1. คุม EC 2.0-4.0 (AJCS 2025) 2. ผสมเกสร: ไม่ต้องง้อผึ้ง! ใช้หุ่นยนต์สั่น 800Hz ให้ละอองหลุด แล้วปรับ 100Hz ให้ติดยอดเกสรตัวเมีย (Liang 2025) 3. อัด CO₂ 800 ppm เร่งโต 4. [เคล็ดลับ ROI]: เด็ดดอกแต่งช่อให้เหลือแค่ 3-5 ผล/ช่อ เพื่อบีบอาหารไปเลี้ยงให้ได้สตรอว์เบอร์รีลูกยักษ์เกรดพรีเมียม',
     headFormation: 'เพิ่มความหวาน (Brix Boosting)',
-    headFormationDesc: 'แสง Far-red 730nm (50 µmol/m²/s) เพิ่ม Brix 12% โดยกระตุ้นยีนขนส่งน้ำตาลเข้าผล (Ries 2024) ฉาย UV-C ทันทีหลังปิดไฟ ฆ่าสปอร์ราแป้งลดเคมี 100% (Suthaparan 2020) รักษา VPD > 0.8 kPa ป้องกันใบไหม้ปลาย (Bradfield 1979)',
-    harvestVegetableDesc: 'แสง Far-red ช่วยยืดก้านผล 62% ทำให้หุ่นยนต์ตรวจจับง่ายขึ้น (Ries 2024) เข้าสู่รอบเก็บเกี่ยวแรกวันที่ 85-90 เก็บซ้ำทุก 3-4 วัน ผลผลิต 8.5 กก./ตร.ม./ปี (Takahashi 2024) ผลผลิตเพิ่ม 48% กับ FR LED:',
+    headFormationDesc: '1. อัดแสง Far-red 730nm กระตุ้นยีนเพิ่มความหวาน (Brix) สูงขึ้น 12% (Ries 2024) 2. ฉายรังสี UV-C ทันทีหลังปิดไฟ เพื่อฆ่าราแป้งโดยไม่ต้องใช้สารเคมี (Suthaparan 2020) 3. คุม VPD > 0.8 kPa กันขอบใบไหม้',
+    harvestVegetableDesc: 'ก้านผลจะยาวขึ้น 62% จากแสง Far-red ช่วยให้หุ่นยนต์ AI มองเห็นและตัดลูกง่ายขึ้น (Ries 2024) เก็บผลสุกได้ตั้งแต่วันที่ 85-90 และหุ่นยนต์จะวนเก็บซ้ำทุก 3-4 วัน ผลผลิตเป้าหมาย: 8.5 กก./ตร.ม./ปี (Takahashi 2024)',
     postHarvest: 'ดูแลหลังเก็บเกี่ยว (Post-Harvest Care)',
-    postHarvestDesc: 'ผลผลิต: Pre-cool 1-4°C ภายใน 1 ชม. เก็บในถุง MAP (ลด O₂ เพิ่ม CO₂ 15-20%) ยืดอายุ 7-10 วัน (Priyadarshi 2024) ต้นแม่: อายุสูงสุด 8-10 เดือน เมื่อแตกไหล (Runners) นำไปขยายพันธุ์ (แม่ 1 ต้น ผลิตลูกได้ 30-50 ต้น ทำให้รอบถัดไปต้นทุนซื้อพันธุ์เป็น 0 บาท) การชำไหล: ตัดไหลที่มีใบ 2-4 ใบ ชำลงถาดเพาะ (Tray-plant) ไว้ที่ชั้นล่างสุดของตู้ 12 ตร.ม. (อุณหภูมิ 20-25°C) วันที่ 1-7 ต้องพ่นหมอกอัดความชื้น 90-100% ตามงานวิจัย (Yamasaki 2020) พอรากเดินเต็มที่จึงนำไปพักห้องเย็น 2-5°C (Crown-cooling) เพื่อกระตุ้นตาดอกรอบใหม่',
+    postHarvestDesc: '1. การจัดการผลสุก: เก็บเข้าถุง MAP (ลด O₂, เพิ่ม CO₂ 15%) ทันที ช่วยยืดอายุได้ 7-10 วัน (Priyadarshi 2024) 2. จัดการแม่พันธุ์: เมื่ออายุครบ 8-10 เดือนและเริ่มแตกไหล ให้นำไหล 2-4 ใบไปชำในถาดเพาะแยก (Tray-plant) ไว้ชั้นล่างสุด พ่นหมอก 90-100% 7 วัน (Yamasaki 2020) คุมอุณหภูมิ 20-25°C 3. ต้นทุนรอบใหม่: 0 บาท! เพราะแม่ 1 ต้น ผลิตลูกพร้อมปลูกให้เราถึง 30-50 ต้น',
   },
   environment: {
     title: 'ควบคุมสภาพแวดล้อม',
@@ -803,6 +804,7 @@ export const th: Translations = {
     status: 'สถานะ',
   },
   controlRoom: {
+    title: 'ห้องควบคุม',
     projects: 'โปรเจกต์',
     newProject: 'โปรเจกต์ใหม่',
     monitoring: 'ตรวจสอบ',
@@ -1248,6 +1250,7 @@ export const en: Translations = {
     status: 'Status',
   },
   controlRoom: {
+    title: 'Control Room',
     projects: 'Projects',
     newProject: 'New Project',
     monitoring: 'Monitoring',

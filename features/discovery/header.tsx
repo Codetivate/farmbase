@@ -116,7 +116,7 @@ export default function Header() {
               }`}
             >
               <Gauge size={14} />
-              <span>Control Room</span>
+              <span>{t.controlRoom.title}</span>
               {viewMode === 'control-room' && (
                 <motion.div
                   layoutId="header-tab-indicator"
@@ -211,7 +211,7 @@ export default function Header() {
                           className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs text-foreground hover:bg-secondary transition-colors text-left"
                         >
                           <Gauge size={13} className="text-muted-foreground" />
-                          Control Room
+                          {t.controlRoom.title}
                         </button>
                         <button
                           onClick={() => { signOut(); setMenuOpen(false); }}
