@@ -583,7 +583,7 @@ export const th: Translations = {
     headFormationDesc: 'แสง Far-red 730nm (50 µmol/m²/s) เพิ่ม Brix 12% โดยกระตุ้นยีนขนส่งน้ำตาลเข้าผล (Ries 2024) ฉาย UV-C ทันทีหลังปิดไฟ ฆ่าสปอร์ราแป้งลดเคมี 100% (Suthaparan 2020) รักษา VPD > 0.8 kPa ป้องกันใบไหม้ปลาย (Bradfield 1979)',
     harvestVegetableDesc: 'แสง Far-red ช่วยยืดก้านผล 62% ทำให้หุ่นยนต์ตรวจจับง่ายขึ้น (Ries 2024) เข้าสู่รอบเก็บเกี่ยวแรกวันที่ 85-90 เก็บซ้ำทุก 3-4 วัน ผลผลิต 8.5 กก./ตร.ม./ปี (Takahashi 2024) ผลผลิตเพิ่ม 48% กับ FR LED:',
     postHarvest: 'ดูแลหลังเก็บเกี่ยว (Post-Harvest Care)',
-    postHarvestDesc: 'ไม่ต้องถอนต้นทิ้ง! Pre-cool 1-4°C ภายใน 1 ชม. จัดเก็บ MAP (O₂ 5-10%, CO₂ 15-20%) ยืดอายุ 7-10 วัน (Priyadarshi 2024) ต้นแม่: ตัดใบเก่า ปุ๋ยฟื้นฟู N/K=1.5 พัก 1-2 สัปดาห์ แล้วกระตุ้นดอกรอบใหม่ 📅 อายุสูงสุดต่อต้น: เก็บเกี่ยวได้ต่อเนื่อง  8-10 เดือน (ประมาณ 3 รอบการเก็บเกี่ยว × 90 วัน) จากนั้นผลผลิตและคุณภาพจะลดลง ควรเปลี่ยนต้นกล้าใหม่จากไหลปลอดโรค (Tissue Culture) อ้างอิงการปลูกแบบไล่ Forcing Culture ของญี่ปุ่น (พฤศจิกายน-มิถุนายน)',
+    postHarvestDesc: 'ผลผลิต: Pre-cool 1-4°C ภายใน 1 ชม. จัดเก็บ MAP (O₂ 5-10%, CO₂ 15-20%) ยืดอายุ 7-10 วัน (Priyadarshi 2024) ต้นแม่: อายุสูงสุด 8-10 เดือน (3 รอบ × 90 วัน) เมื่อผลผลิตเริ่มลดลงและแตกต้นไหล (Runners) สามารถนำไปขยายพันธุ์ต่อด้วยเทคนิค Tray-plant Nursery (Yamasaki 2020) — ตัดไหลตอนมีใบ 2-4 ใบชำในถาดเพาะแยกจากสตรอว์เบอร์รีต้นแม่เพื่อตัดวงจรโรค พอรากเดินเต็มที่ก็นำไปทำ Crown-cooling เริ่มรอบปลูกใหม่ได้เลย!',
   },
   environment: {
     title: 'ควบคุมสภาพแวดล้อม',
@@ -1047,7 +1047,7 @@ export const en: Translations = {
     headFormationDesc: 'Far-red 730nm (50 µmol/m²/s) increases Brix by 12% by upregulating fruit sugar transport genes and sink strength (Ries 2024). UV-C immediately after lights-off kills powdery mildew spores without chemicals (Suthaparan 2020). Maintain VPD > 0.8 kPa to prevent tip-burn (Bradfield 1979).',
     harvestVegetableDesc: 'Far-red extends peduncle length by 62%, improving robotic harvest detection (Ries 2024). First harvest Day 85-90. Pick every 3-4 days. Yield: 8.5 kg/m²/yr (Takahashi 2024). FR-LED boosts total fruit yield by 48%. Expected yield:',
     postHarvest: 'Post-Harvest Care',
-    postHarvestDesc: 'Do NOT uproot! Pre-cool to 1-4°C within 1h. Store with MAP (O₂ 5-10%, CO₂ 15-20%) for 7-10 day shelf life (Priyadarshi 2024). Mother plants: prune old leaves, apply recovery N/K=1.5 formula, rest 1-2 weeks, then re-induce flowering. 📅 Max plant lifespan: continuous harvest for 8-10 months (~3 harvest cycles × 90 days). After that, yield and fruit quality decline significantly. Replace with fresh tissue-culture crowns. Referenced: Japanese forcing culture protocol (Nov–Jun harvest window).',
+    postHarvestDesc: 'Fruits: Pre-cool to 1-4°C within 1h. Store MAP (O₂ 5-10%, CO₂ 15-20%) for 7-10 day shelf life (Priyadarshi 2024). Mother plants: Max lifespan 8-10 months (~3 cycles × 90 days). Once yield declines and vegetative runners emerge, propagate using the Tray-plant Nursery method (Yamasaki 2020) — excise runners with 2-4 leaves and root them in clean cell trays away from mothers to break disease cycles. Once rooted, apply crown-cooling to begin a new crop cycle!',
   },
   environment: {
     title: 'Environment Controls',
