@@ -295,7 +295,7 @@ export default function CropCard({ crop, index, citations = [], onSelect }: Crop
             <span className="text-sm font-semibold font-mono text-foreground">
               {isStrawberry && locale === 'th' ? '฿45,698' : formatCurrency(roi.cost)}
             </span>
-            <span className="text-[11px] text-muted-foreground/50 font-mono">{t.card.perCycle} / {areaSquareMeters} {locale === 'th' ? 'ตร.ม.' : 'sqm'}</span>
+            <span className="text-[11px] text-muted-foreground/50 font-mono">{t.card.perCycle} / {areaSquareMeters} {locale === 'th' ? 'ตร.ม. (200 ต้น)' : 'sqm (200 plants)'}</span>
           </div>
           <div className="flex items-center gap-2 text-xs text-muted-foreground/70 font-mono">
             <span>{t.card.capexLabel} {isStrawberry && locale === 'th' ? '฿42,842' : formatCurrency(roi.capitalCost)}</span>

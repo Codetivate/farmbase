@@ -42,7 +42,7 @@ export default function MarketplaceFeed() {
               price_per_kg_thb: 600,
               usd_thb_rate: 34.5,
               price_change_pct: 12.5,
-              yield_per_sqm_kg: 2.125,
+              yield_per_sqm_kg: 2.833,
               demand_index: 0.95,
               seasonality: ['winter', 'year-round-indoor'],
               capex_per_sqm_usd: 103.484,
