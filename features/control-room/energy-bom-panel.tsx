@@ -22,62 +22,25 @@ interface BOMItem {
 }
 
 const DEFAULT_BOM: BOMItem[] = [
-  // ── Room Shell (Isaac: /World/Room/*) ──
-  { id: 'PIR', category: '🏗️ Room', name: 'PIR Panel 50mm', isaacPath: '/World/Room/BackWall, LeftWall, etc.', spec: '50mm PIR, R=3.5 m²·K/W', qty: 35, unit: 'm²', unitPrice: 1000, },
-  { id: 'EPOXY', category: '🏗️ Room', name: 'Epoxy Floor + Coving', isaacPath: '/World/Room/Floor, Cov_*', spec: 'Medical-grade, 1% slope', qty: 12, unit: 'm²', unitPrice: 1250, },
-  { id: 'DRAIN', category: '🏗️ Room', name: 'SS Trench Drain', isaacPath: '/World/Room/Drain, Grate_*', spec: 'SUS304, flush-mount', qty: 1, unit: 'set', unitPrice: 3500, },
-  { id: 'CEIL', category: '🏗️ Room', name: 'Ceiling Panel', isaacPath: '/World/Room/Ceiling', spec: 'PIR 50mm', qty: 13, unit: 'm²', unitPrice: 1000, },
+  // ── สมองกล & เซนเซอร์ (AI & IoT) ──
+  { id: 'JETSON', category: '🤖 AI', name: 'NVIDIA Jetson Orin Nano (8GB)', isaacPath: '/World/Ctrl/Jetson', spec: 'Developer Kit', qty: 1, unit: 'set', unitPrice: 16500, wattage: 15, hoursPerDay: 24, },
+  { id: 'SENSORS', category: '🤖 AI', name: 'Sensirion SCD41 & SHT4x', isaacPath: '/World/Racks/*/IOT_*', spec: 'CO2, Temp, Humidity', qty: 1, unit: 'set', unitPrice: 3500, wattage: 2, hoursPerDay: 24, },
+  
+  // ── ระบบแสงสว่าง (Lighting) ──
+  { id: 'LED', category: '💡 LED', name: 'Samsung LM301H EVO + Osram 730nm', isaacPath: '/World/Racks/*/LED_*', spec: 'Full spec + Far-red', qty: 1, unit: 'set', unitPrice: 14000, wattage: 400, hoursPerDay: 14, },
+  
+  // ── คุมอากาศและน้ำ (HVAC & Water) ──
+  { id: 'AC', category: '❄️ HVAC', name: 'Haier Inverter 12,000 BTU', isaacPath: '/World/HVAC/AC', spec: 'Self-Cleaning', qty: 1, unit: 'set', unitPrice: 11000, wattage: 800, hoursPerDay: 24, },
+  { id: 'CHILLER', category: '💧 Water', name: 'Hailea HC-150A Chiller', isaacPath: '/World/Irrig/Chiller', spec: 'Aquarium Chiller', qty: 1, unit: 'set', unitPrice: 6500, wattage: 150, hoursPerDay: 12, },
+  
+  // ── พลังงานสำรอง (Power Storage) ──
+  { id: 'BATTERY', category: '🔋 Power', name: 'Sodium-ion Battery 12V 50Ah', isaacPath: '/World/Power/Battery', spec: 'Na-ion Deep Cycle', qty: 1, unit: 'set', unitPrice: 8000, },
 
-  // ── Door (Isaac: /World/Door/*) ──
-  { id: 'DOOR', category: '🚪 Door', name: 'Hermetic Sliding Door', isaacPath: '/World/Door/Panel, Rail, etc.', spec: 'SUS304, 850×2100mm, EPDM seal', qty: 1, unit: 'set', unitPrice: 25000, },
-  { id: 'FLANGE', category: '🚪 Door', name: 'Expansion Flange Kit', isaacPath: '/World/Door/Flange*, Bolt_*', spec: 'ISO modular, M10 ×8 bolt', qty: 1, unit: 'set', unitPrice: 3500, },
+  // ── โครงสร้างห้อง (Structure & Racks) ──
+  { id: 'ROOM', category: '🏗️ Room', name: 'Isowall EPS 2" + Alu 2020', isaacPath: '/World/Room/*', spec: 'Include Gutters', qty: 1, unit: 'set', unitPrice: 23500, },
 
-  // ── Racks (Isaac: /World/Racks/*) ──
-  { id: 'TSLOT', category: '🔩 Rack', name: 'T-Slot Post 40×40mm', isaacPath: '/World/Racks/*/Post_*', spec: 'Anodized Al, 2.5m', qty: 8, unit: 'pcs', unitPrice: 750, },
-  { id: 'SHELF', category: '🔩 Rack', name: 'Shelf Bracket', isaacPath: '/World/Racks/*/Shelf_T*', spec: 'Steel flat plate', qty: 10, unit: 'pcs', unitPrice: 350, },
-  { id: 'GUTTER', category: '🔩 Rack', name: 'NFT Gutter U-Channel', isaacPath: '/World/Racks/*/Gut_T*', spec: 'PVC 250mm × 2.5m', qty: 10, unit: 'pcs', unitPrice: 400, },
-  { id: 'TRAY', category: '🔩 Rack', name: 'Drain Tray', isaacPath: '/World/Racks/*/Tray', spec: 'SUS304', qty: 2, unit: 'pcs', unitPrice: 1500, },
-
-  // ── LED (Isaac: /World/Racks/*/LED_T*) ──
-  { id: 'LED', category: '💡 LED', name: 'Samsung LM301H EVO Bar', isaacPath: '/World/Racks/*/LED_T*', spec: '40W, full spectrum', qty: 10, unit: 'pcs', unitPrice: 2500, wattage: 40, hoursPerDay: 14, },
-  { id: 'DRIVER', category: '💡 LED', name: 'Meanwell LED Driver', isaacPath: '(paired with LED)', spec: 'HLG-240H', qty: 5, unit: 'pcs', unitPrice: 1600, },
-  { id: 'HSINK', category: '💡 LED', name: 'Heat-sink + Wire', isaacPath: '/World/Racks/*/Fin_T*', spec: 'Al extrusion', qty: 10, unit: 'pcs', unitPrice: 300, },
-
-  // ── HVAC (Isaac: /World/HVAC/*) ──
-  { id: 'AC', category: '❄️ HVAC', name: 'Inverter AC', isaacPath: '/World/HVAC/AC', spec: '12,000 BTU, R32', qty: 1, unit: 'set', unitPrice: 12000, wattage: 800, hoursPerDay: 24, },
-  { id: 'SOX', category: '❄️ HVAC', name: 'Sox Duct (PE Fabric)', isaacPath: '/World/HVAC/Sox_*', spec: 'Ø180mm × 3m', qty: 1, unit: 'set', unitPrice: 3500, },
-  { id: 'HUM', category: '❄️ HVAC', name: 'Ultrasonic Humidifier', isaacPath: '/World/HVAC/Hum', spec: '5L/day', qty: 1, unit: 'set', unitPrice: 2500, wattage: 30, hoursPerDay: 12, },
-  { id: 'EXFAN', category: '❄️ HVAC', name: 'Exhaust Fan', isaacPath: '/World/HVAC/ExFan', spec: '6 inch', qty: 1, unit: 'pcs', unitPrice: 1500, wattage: 25, hoursPerDay: 4, },
-
-  // ── CO2 (Isaac: /World/CO2/*) ──
-  { id: 'CO2TANK', category: '🫧 CO2', name: 'CO2 Tank (5kg)', isaacPath: '/World/CO2/Tank', spec: 'Rent/year', qty: 1, unit: 'set', unitPrice: 1500, },
-  { id: 'CO2REG', category: '🫧 CO2', name: 'Regulator + Solenoid', isaacPath: '/World/CO2/Reg, Noz', spec: 'With flow meter', qty: 1, unit: 'set', unitPrice: 2500, wattage: 5, hoursPerDay: 8, },
-
-  // ── Irrigation (Isaac: /World/Irrig/*, /World/Racks/*/Drip_*) ──
-  { id: 'TANK', category: '💧 Irrig', name: 'HDPE Tank 100L', isaacPath: '/World/Irrig/Tank', spec: 'Food-grade', qty: 1, unit: 'pcs', unitPrice: 800, },
-  { id: 'PUMP', category: '💧 Irrig', name: 'Water Pump DC', isaacPath: '/World/Irrig/Pump', spec: '12V, 800L/hr', qty: 1, unit: 'pcs', unitPrice: 500, wattage: 40, hoursPerDay: 8, },
-  { id: 'DOSA', category: '💧 Irrig', name: 'Peristaltic Dosing Pump', isaacPath: '/World/Irrig/Dos_*', spec: 'A/B/pH ×3', qty: 3, unit: 'pcs', unitPrice: 1500, wattage: 5, hoursPerDay: 2, },
-  { id: 'DRIP', category: '💧 Irrig', name: 'PE Drip Line 16mm', isaacPath: '/World/Racks/*/Drip_T*', spec: '+ emitters', qty: 10, unit: 'pcs', unitPrice: 120, },
-  { id: 'ECPH', category: '💧 Irrig', name: 'EC/pH Probe', isaacPath: '/World/Irrig/Probe', spec: 'Inline sensor', qty: 1, unit: 'set', unitPrice: 3000, },
-  { id: 'PIPE', category: '💧 Irrig', name: 'PVC Pipe + Header', isaacPath: '/World/Irrig/Riser, Manifold, Header_*', spec: 'Manifold + Tee', qty: 1, unit: 'set', unitPrice: 1500, },
-
-  // ── Control (Isaac: /World/Ctrl/*) ──
-  { id: 'ESP32', category: '🤖 IoT', name: 'ESP32-S3 Board', isaacPath: '/World/Ctrl/Panel', spec: 'WiFi + BLE', qty: 2, unit: 'pcs', unitPrice: 300, wattage: 3, hoursPerDay: 24, },
-  { id: 'DHT22', category: '🤖 IoT', name: 'DHT22 Sensor', isaacPath: '/World/Racks/*/IOT_T*', spec: 'Temp + Humidity', qty: 6, unit: 'pcs', unitPrice: 150, },
-  { id: 'SCD41', category: '🤖 IoT', name: 'SCD41 CO2 Sensor', isaacPath: '/World/Racks/*/IOT_T*_Mid', spec: 'NDIR CO2', qty: 2, unit: 'pcs', unitPrice: 600, },
-  { id: 'RELAY', category: '🤖 IoT', name: 'Relay Module 4ch', isaacPath: '/World/Ctrl/Brk_*', spec: '10A per ch', qty: 2, unit: 'pcs', unitPrice: 200, },
-  { id: 'WIRE', category: '🤖 IoT', name: 'Wiring + PCB + Housing', isaacPath: '/World/Ctrl/*', spec: 'Misc electronics', qty: 1, unit: 'lot', unitPrice: 1500, },
-
-  // ── Crop ──
-  { id: 'PLANT', category: '🌱 Crop', name: 'Tochiotome Crown', isaacPath: '/World/Racks/*/Cr_T*', spec: 'Tissue-culture', qty: 144, unit: 'pcs', unitPrice: 100, },
-  { id: 'MEDIA', category: '🌱 Crop', name: 'Cocopeat + Perlite', isaacPath: '(in gutter)', spec: 'Growing media', qty: 1, unit: 'lot', unitPrice: 1500, },
-  { id: 'FERT', category: '🌱 Crop', name: 'Nutrient A+B+pH (6mo)', isaacPath: '(in tank)', spec: 'Hydroponic grade', qty: 1, unit: 'lot', unitPrice: 2000, },
-
-  // ── Robot (Isaac: /World/Robot/*) — NVIDIA Franka Panda ──
-  { id: 'FRANKA', category: '🦾 Robot', name: 'Franka Panda Arm', isaacPath: '/World/Robot/FrankaPanda', spec: '7-DOF + 2-finger gripper, 3kg payload', qty: 1, unit: 'set', unitPrice: 450000, wattage: 300, hoursPerDay: 4, },
-  { id: 'PEDESTAL', category: '🦾 Robot', name: 'Robot Pedestal Mount', isaacPath: '/World/Robot/Pedestal, PedBolt_*', spec: 'SUS304, floor-bolted', qty: 1, unit: 'set', unitPrice: 8000, },
-  { id: 'GRIPPER', category: '🦾 Robot', name: 'Soft Gripper (Berry)', isaacPath: '/World/Robot/Grip_*', spec: 'Silicone finger, force-limited', qty: 1, unit: 'set', unitPrice: 15000, },
-  { id: 'VISION', category: '🦾 Robot', name: 'Intel RealSense D435', isaacPath: '(end-effector cam)', spec: 'RGB-D, 1280×720', qty: 1, unit: 'pcs', unitPrice: 12000, wattage: 5, hoursPerDay: 4, },
+  // ── พันธุ์พืช (Crop Phase 1) — Self-propagating ──
+  { id: 'PLANT', category: '🌱 Crop', name: 'Tochiotome Tissue Culture', isaacPath: '/World/Racks/*/Cr_*', spec: 'Self-propagated (Nursery)', qty: 160, unit: 'pcs', unitPrice: 0, },
 ];
 
 // ═══════════════════════════════════════════════════════
