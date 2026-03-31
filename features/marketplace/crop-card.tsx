@@ -293,14 +293,14 @@ export default function CropCard({ crop, index, citations = [], onSelect }: Crop
           <div className="flex items-center gap-2">
             <span className="text-xs uppercase tracking-wider text-muted-foreground/70 font-medium">{t.card.cost}</span>
             <span className="text-sm font-semibold font-mono text-foreground">
-              {isStrawberry && locale === 'th' ? '฿85,856' : formatCurrency(roi.cost)}
+              {isStrawberry && locale === 'th' ? '฿149,250' : formatCurrency(roi.cost)}
             </span>
-            <span className="text-[11px] text-muted-foreground/50 font-mono">{locale === 'th' ? 'รวมทุนเริ่มแรก' : 'Initial Total'} / {areaSquareMeters} {locale === 'th' ? 'ตร.ม. (200 ต้น)' : 'sqm (200 plants)'}</span>
+            <span className="text-[11px] text-muted-foreground/50 font-mono">{locale === 'th' ? 'รวมเริ่มแรก (รวมค่าแรง/ดำเนินการทีแรก)' : 'Total First Cycle'} / {areaSquareMeters} {locale === 'th' ? 'ตร.ม. (200 ต้น)' : 'sqm (200 plants)'}</span>
           </div>
           <div className="flex items-center gap-2 text-xs text-muted-foreground/70 font-mono">
             <span>{t.card.capexLabel} {isStrawberry && locale === 'th' ? '฿83,000' : formatCurrency(roi.capitalCost)}</span>
             <span className="text-border">+</span>
-            <span>{t.card.opexLabel} {isStrawberry && locale === 'th' ? '฿2,856' : formatCurrency(roi.operatingCost)}</span>
+            <span>{t.card.opexLabel} {isStrawberry && locale === 'th' ? '฿66,250' : formatCurrency(roi.operatingCost)}</span>
           </div>
         </div>
 
