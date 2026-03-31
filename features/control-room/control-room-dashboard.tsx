@@ -612,7 +612,7 @@ export default function ControlRoomDashboard() {
               </svg>
             </button>
 
-            <span className="text-sm text-muted-foreground">Control Room</span>
+            <span className="text-sm text-muted-foreground">{cr.title}</span>
             <span className="text-muted-foreground/50">/</span>
             <span className="text-sm text-foreground font-medium">{farm.name}</span>
             <span className="text-muted-foreground/50">/</span>
