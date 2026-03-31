@@ -9,11 +9,9 @@ import {
   ChevronRight,
   LayoutDashboard,
   MessageSquareWarning,
-  Activity,
 } from 'lucide-react';
 import { useDashboardI18n } from '@/lib/i18n/use-dashboard-i18n';
 import { useI18n } from '@/lib/i18n/i18n-context';
-import { useFarmStore } from '@/store/farm-store';
 
 export type DashboardSection = 'papers' | 'issues' | 'users';
 
@@ -32,7 +30,6 @@ export default function DashboardLayout({
 }: DashboardLayoutProps) {
   const dt = useDashboardI18n();
   const { t } = useI18n();
-  const { setViewMode } = useFarmStore();
   const [collapsed, setCollapsed] = useState(false);
 
   const navItems = [
@@ -100,18 +97,6 @@ export default function DashboardLayout({
                 </button>
               );
             })}
-            <div className="my-2 border-t border-border/50" />
-            <button
-              onClick={() => setViewMode('operations')}
-              className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-[13px] font-medium transition-all text-amber-500 hover:text-amber-400 hover:bg-amber-500/10 ${
-                collapsed ? 'justify-center' : ''
-              }`}
-            >
-              <Activity size={16} />
-              {!collapsed && (
-                <span className="flex-1 text-left">{t.operations?.title || 'Live Operations'}</span>
-              )}
-            </button>
           </nav>
         </div>
       </aside>
@@ -158,14 +143,6 @@ export default function DashboardLayout({
               </button>
             );
           })}
-          <div className="h-6 w-px bg-border/50 mx-1" />
-          <button
-            onClick={() => setViewMode('operations')}
-            className="flex flex-col items-center gap-0.5 py-2 px-3 rounded-xl transition-all text-amber-500 hover:text-amber-400"
-          >
-            <Activity size={20} />
-            <span className="text-[10px] font-medium truncate max-w-[60px]">{t.operations?.title || 'Live'}</span>
-          </button>
         </div>
       </div>
     </div>

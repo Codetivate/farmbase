@@ -292,13 +292,15 @@ export default function CropCard({ crop, index, citations = [], onSelect }: Crop
         <div className="flex items-center justify-between px-0.5">
           <div className="flex items-center gap-2">
             <span className="text-xs uppercase tracking-wider text-muted-foreground/70 font-medium">{t.card.cost}</span>
-            <span className="text-sm font-semibold font-mono text-foreground">{formatCurrency(roi.cost)}</span>
+            <span className="text-sm font-semibold font-mono text-foreground">
+              {isStrawberry && locale === 'th' ? '฿45,698' : formatCurrency(roi.cost)}
+            </span>
             <span className="text-[11px] text-muted-foreground/50 font-mono">{t.card.perCycle} / {areaSquareMeters} {locale === 'th' ? 'ตร.ม.' : 'sqm'}</span>
           </div>
           <div className="flex items-center gap-2 text-xs text-muted-foreground/70 font-mono">
-            <span>{t.card.capexLabel} {formatCurrency(roi.capitalCost)}</span>
+            <span>{t.card.capexLabel} {isStrawberry && locale === 'th' ? '฿42,842' : formatCurrency(roi.capitalCost)}</span>
             <span className="text-border">+</span>
-            <span>{t.card.opexLabel} {formatCurrency(roi.operatingCost)}</span>
+            <span>{t.card.opexLabel} {isStrawberry && locale === 'th' ? '฿2,856' : formatCurrency(roi.operatingCost)}</span>
           </div>
         </div>
 

@@ -339,6 +339,62 @@ export interface Translations {
     step4Title: string;
     step4Desc: string;
   };
+  controlRoom: {
+    projects: string;
+    newProject: string;
+    monitoring: string;
+    overview: string;
+    energy: string;
+    bom: string;
+    robotics: string;
+    startSimulation: string;
+    stopSimulation: string;
+    controlVersion: string;
+    status: string;
+    parametersInRange: string;
+    noData: string;
+    healthy: string;
+    alert: string;
+    weather: string;
+    loadingWeather: string;
+    cropCycle: string;
+    day: string;
+    phase: string;
+    health: string;
+    noActiveSimulation: string;
+    realtimeParams: string;
+    parameter: string;
+    current: string;
+    targetRange: string;
+    delta: string;
+    statusCol: string;
+    ok: string;
+    noSensorData: string;
+    noSensorDataHint: string;
+    clickStartSim: string;
+    robotTitle: string;
+    robot: string;
+    vision: string;
+    isaacSim: string;
+    digitalTwin: string;
+    standby: string;
+    notConnected: string;
+    simReady: string;
+    hilNotConnected: string;
+    hilHint: string;
+    temp: string;
+    humidity: string;
+    co2: string;
+    ec: string;
+    ph: string;
+    ppfd: string;
+    vpd: string;
+    clear: string;
+    partlyCloudy: string;
+    foggy: string;
+    rain: string;
+    storm: string;
+  };
 }
 
 export const th: Translations = {
@@ -717,6 +773,62 @@ export const th: Translations = {
     currentValue: 'ค่าปัจจุบัน',
     status: 'สถานะ',
   },
+  controlRoom: {
+    projects: 'โปรเจกต์',
+    newProject: 'โปรเจกต์ใหม่',
+    monitoring: 'ตรวจสอบ',
+    overview: 'ภาพรวม',
+    energy: 'พลังงาน',
+    bom: 'รายการวัสดุ',
+    robotics: 'หุ่นยนต์',
+    startSimulation: 'เริ่มจำลอง',
+    stopSimulation: 'หยุดจำลอง',
+    controlVersion: 'Farmbase Control v3.0',
+    status: 'สถานะ',
+    parametersInRange: 'พารามิเตอร์อยู่ในช่วง',
+    noData: 'ไม่มีข้อมูล',
+    healthy: 'ปกติ',
+    alert: 'แจ้งเตือน',
+    weather: 'สภาพอากาศ',
+    loadingWeather: 'กำลังโหลดข้อมูลอากาศ...',
+    cropCycle: 'รอบการปลูก',
+    day: 'วันที่',
+    phase: 'ระยะ',
+    health: 'สุขภาพ',
+    noActiveSimulation: 'ไม่มีการจำลองที่ใช้งานอยู่',
+    realtimeParams: 'พารามิเตอร์แบบเรียลไทม์',
+    parameter: 'พารามิเตอร์',
+    current: 'ปัจจุบัน',
+    targetRange: 'ช่วงเป้าหมาย',
+    delta: 'ค่าเบี่ยงเบน',
+    statusCol: 'สถานะ',
+    ok: 'ปกติ',
+    noSensorData: 'ไม่มีข้อมูลเซ็นเซอร์',
+    noSensorDataHint: 'คลิก',
+    clickStartSim: 'ที่แถบด้านข้าง หรือเชื่อมต่อ AI Engine ผ่าน WebSocket',
+    robotTitle: 'หุ่นยนต์ — Franka Panda เก็บเกี่ยว',
+    robot: 'หุ่นยนต์',
+    vision: 'กล้อง',
+    isaacSim: 'Isaac Sim',
+    digitalTwin: 'แฝดดิจิทัล',
+    standby: 'พร้อมใช้งาน',
+    notConnected: 'ไม่ได้เชื่อมต่อ',
+    simReady: 'พร้อมจำลอง',
+    hilNotConnected: 'ไม่ได้เชื่อมต่อ Hardware-in-the-Loop',
+    hilHint: 'รัน Isaac Sim ด้วย',
+    temp: 'อุณหภูมิ',
+    humidity: 'ความชื้น',
+    co2: 'CO₂',
+    ec: 'EC',
+    ph: 'pH',
+    ppfd: 'PPFD',
+    vpd: 'VPD',
+    clear: 'ท้องฟ้าแจ่มใส',
+    partlyCloudy: 'มีเมฆบางส่วน',
+    foggy: 'มีหมอก',
+    rain: 'ฝนตก',
+    storm: 'พายุ',
+  },
 };
 
 
@@ -1076,6 +1188,62 @@ export const en: Translations = {
     manualMode: 'Manual Mode',
     currentValue: 'Current',
     status: 'Status',
+  },
+  controlRoom: {
+    projects: 'Projects',
+    newProject: 'New Project',
+    monitoring: 'Monitoring',
+    overview: 'Overview',
+    energy: 'Energy',
+    bom: 'Bill of Materials',
+    robotics: 'Robotics',
+    startSimulation: 'Start Simulation',
+    stopSimulation: 'Stop Simulation',
+    controlVersion: 'Farmbase Control v3.0',
+    status: 'Status',
+    parametersInRange: 'parameters in range',
+    noData: 'NO DATA',
+    healthy: 'HEALTHY',
+    alert: 'ALERT',
+    weather: 'Weather',
+    loadingWeather: 'Loading weather data...',
+    cropCycle: 'Crop Cycle',
+    day: 'Day',
+    phase: 'phase',
+    health: 'Health',
+    noActiveSimulation: 'No active simulation',
+    realtimeParams: 'Real-time Parameters',
+    parameter: 'Parameter',
+    current: 'Current',
+    targetRange: 'Target Range',
+    delta: 'Delta',
+    statusCol: 'Status',
+    ok: 'OK',
+    noSensorData: 'No sensor data available',
+    noSensorDataHint: 'Click',
+    clickStartSim: 'in the sidebar or connect the AI Engine via WebSocket.',
+    robotTitle: 'Robotics — Franka Panda Harvester',
+    robot: 'Robot',
+    vision: 'Vision',
+    isaacSim: 'Isaac Sim',
+    digitalTwin: 'Digital Twin',
+    standby: 'STANDBY',
+    notConnected: 'NOT CONNECTED',
+    simReady: 'SIM READY',
+    hilNotConnected: 'Hardware-in-the-Loop bridge not connected',
+    hilHint: 'Run Isaac Sim with',
+    temp: 'Temperature',
+    humidity: 'Humidity',
+    co2: 'CO₂',
+    ec: 'EC',
+    ph: 'pH',
+    ppfd: 'PPFD',
+    vpd: 'VPD',
+    clear: 'Clear',
+    partlyCloudy: 'Partly cloudy',
+    foggy: 'Foggy',
+    rain: 'Rain',
+    storm: 'Storm',
   },
 };
 

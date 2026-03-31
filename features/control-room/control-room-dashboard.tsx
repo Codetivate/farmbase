@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useI18n } from '@/lib/i18n/i18n-context';
 import EnergyBomPanel from './energy-bom-panel';
 
 // ═══════════════════════════════════════════════════════
@@ -61,13 +62,13 @@ const FARMS: FarmProfile[] = [
 ];
 
 const PARAM_LABELS: Record<string, string> = {
-  temp: 'Temperature',
-  rh:   'Humidity',
-  co2:  'CO₂',
-  ec:   'EC',
-  ph:   'pH',
-  ppfd: 'PPFD',
-  vpd:  'VPD',
+  temp: 'temp',
+  rh:   'humidity',
+  co2:  'co2',
+  ec:   'ec',
+  ph:   'ph',
+  ppfd: 'ppfd',
+  vpd:  'vpd',
 };
 
 // ═══════════════════════════════════════════════════════
@@ -95,13 +96,6 @@ interface LiveReadings {
 
 type Section = 'overview' | 'energy' | 'bom' | 'robot';
 
-const SECTIONS: { key: Section; label: string }[] = [
-  { key: 'overview', label: 'Overview' },
-  { key: 'energy',   label: 'Energy' },
-  { key: 'bom',      label: 'Bill of Materials' },
-  { key: 'robot',    label: 'Robotics' },
-];
-
 // ═══════════════════════════════════════════════════════
 // STATUS BADGE — Supabase-style flat badge
 // ═══════════════════════════════════════════════════════
@@ -126,6 +120,7 @@ function Badge({ variant, children }: { variant: 'success' | 'error' | 'warning'
 function Sidebar({
   farms, selectedFarmId, onSelectFarm, section, onSelectSection,
   connected, simMode, onStartSim, onStopSim, sidebarOpen, onToggleSidebar,
+  t,
 }: {
   farms: FarmProfile[];
   selectedFarmId: string;
@@ -138,7 +133,15 @@ function Sidebar({
   onStopSim: () => void;
   sidebarOpen: boolean;
   onToggleSidebar: () => void;
+  t: any;
 }) {
+  const cr = t.controlRoom;
+  const SECTIONS: { key: Section; label: string }[] = [
+    { key: 'overview', label: cr.overview },
+    { key: 'energy',   label: cr.energy },
+    { key: 'bom',      label: cr.bom },
+    { key: 'robot',    label: cr.robotics },
+  ];
   return (
     <>
       {/* Mobile overlay */}
@@ -168,7 +171,7 @@ function Sidebar({
         {/* Farm List */}
         <div className="px-3 py-3">
           <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider px-2 mb-2">
-            Projects
+            {cr.projects}
           </div>
           {farms.map(f => (
             <button
@@ -200,7 +203,7 @@ function Sidebar({
           ))}
           <button className="w-full flex items-center gap-2 px-3 py-2 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-[hsl(var(--surface-2))]/50 transition-colors border border-dashed border-[hsl(var(--border))] mt-2">
             <span className="text-lg leading-none">+</span>
-            New Project
+            {cr.newProject}
           </button>
         </div>
 
@@ -210,7 +213,7 @@ function Sidebar({
         {/* Section Navigation */}
         <div className="px-3 py-3 flex-1">
           <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider px-2 mb-2">
-            Monitoring
+            {cr.monitoring}
           </div>
           {SECTIONS.map(s => (
             <button
@@ -235,17 +238,17 @@ function Sidebar({
           {!connected && !simMode && (
             <button onClick={onStartSim}
               className="w-full px-3 py-2 text-sm font-medium rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition-colors">
-              Start Simulation
+              {cr.startSimulation}
             </button>
           )}
           {simMode && (
             <button onClick={onStopSim}
               className="w-full px-3 py-2 text-sm font-medium rounded-md bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20 transition-colors">
-              Stop Simulation
+              {cr.stopSimulation}
             </button>
           )}
           <div className="text-[11px] text-muted-foreground text-center">
-            Farmbase Control v3.0
+            {cr.controlVersion}
           </div>
         </div>
       </aside>
@@ -257,30 +260,40 @@ function Sidebar({
 // OVERVIEW SECTION
 // ═══════════════════════════════════════════════════════
 function OverviewSection({
-  farm, live, weather, compliance, total,
+  farm, live, weather, compliance, total, t,
 }: {
   farm: FarmProfile;
   live: LiveReadings | null;
   weather: WeatherData | null;
   compliance: number;
   total: number;
+  t: any;
 }) {
+  const cr = t.controlRoom;
+  const paramLabelMap: Record<string, string> = {
+    temp: cr.temp, rh: cr.humidity, co2: cr.co2,
+    ec: cr.ec, ph: cr.ph, ppfd: cr.ppfd, vpd: cr.vpd,
+  };
+  const weatherDescMap: Record<string, string> = {
+    'Clear': cr.clear, 'Partly cloudy': cr.partlyCloudy,
+    'Foggy': cr.foggy, 'Rain': cr.rain, 'Storm': cr.storm,
+  };
   return (
     <div className="space-y-6">
       {/* Status Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Farm Status */}
         <div className="rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-5">
-          <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mb-3">Status</div>
+          <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mb-3">{cr.status}</div>
           <div className="flex items-center justify-between">
             <div>
               <div className="text-2xl font-bold text-foreground tabular-nums">
                 {live ? `${compliance}/${total}` : '—'}
               </div>
-              <div className="text-xs text-muted-foreground mt-0.5">parameters in range</div>
+              <div className="text-xs text-muted-foreground mt-0.5">{cr.parametersInRange}</div>
             </div>
             <Badge variant={!live ? 'neutral' : compliance === total ? 'success' : 'warning'}>
-              {!live ? 'NO DATA' : compliance === total ? 'HEALTHY' : 'ALERT'}
+              {!live ? cr.noData : compliance === total ? cr.healthy : cr.alert}
             </Badge>
           </div>
           {live && (
@@ -295,13 +308,13 @@ function OverviewSection({
 
         {/* Weather */}
         <div className="rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-5">
-          <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mb-3">Weather</div>
+          <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mb-3">{cr.weather}</div>
           {weather ? (
             <>
               <div className="text-2xl font-bold text-foreground tabular-nums">{weather.temp_c.toFixed(1)}°C</div>
               <div className="text-xs text-muted-foreground mt-0.5">{weather.humidity}% RH · {weather.city}</div>
               <div className="mt-3 flex items-center gap-2">
-                <span className="text-xs text-muted-foreground">{weather.desc}</span>
+                <span className="text-xs text-muted-foreground">{weatherDescMap[weather.desc] || weather.desc}</span>
                 {Math.abs(weather.temp_c - farm.targets.temp.value) > 8 && (
                   <Badge variant="warning">ΔT {Math.abs(weather.temp_c - farm.targets.temp.value).toFixed(0)}°C</Badge>
                 )}
@@ -310,20 +323,20 @@ function OverviewSection({
           ) : (
             <>
               <div className="text-2xl font-bold text-foreground tabular-nums">—</div>
-              <div className="text-xs text-muted-foreground mt-0.5">Loading weather data...</div>
+              <div className="text-xs text-muted-foreground mt-0.5">{cr.loadingWeather}</div>
             </>
           )}
         </div>
 
         {/* Crop */}
         <div className="rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-5">
-          <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mb-3">Crop Cycle</div>
+          <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mb-3">{cr.cropCycle}</div>
           {live ? (
             <>
-              <div className="text-2xl font-bold text-foreground tabular-nums">Day {live.day}</div>
-              <div className="text-xs text-muted-foreground mt-0.5 capitalize">{live.phase} phase</div>
+              <div className="text-2xl font-bold text-foreground tabular-nums">{cr.day} {live.day}</div>
+              <div className="text-xs text-muted-foreground mt-0.5 capitalize">{live.phase} {cr.phase}</div>
               <div className="mt-3 flex items-center gap-2">
-                <span className="text-xs text-muted-foreground">Health</span>
+                <span className="text-xs text-muted-foreground">{cr.health}</span>
                 <div className="flex-1 h-1.5 rounded-full bg-[hsl(var(--surface-3))] overflow-hidden">
                   <div className="h-full rounded-full bg-emerald-400 transition-all duration-500" style={{ width: `${live.health * 100}%` }} />
                 </div>
@@ -333,7 +346,7 @@ function OverviewSection({
           ) : (
             <>
               <div className="text-2xl font-bold text-foreground tabular-nums">—</div>
-              <div className="text-xs text-muted-foreground mt-0.5">No active simulation</div>
+              <div className="text-xs text-muted-foreground mt-0.5">{cr.noActiveSimulation}</div>
             </>
           )}
         </div>
@@ -342,17 +355,17 @@ function OverviewSection({
       {/* Parameters Table */}
       <div className="rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] overflow-hidden">
         <div className="px-5 py-3 border-b border-[hsl(var(--border))] flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-foreground">Real-time Parameters</h3>
+          <h3 className="text-sm font-semibold text-foreground">{cr.realtimeParams}</h3>
           <span className="text-[11px] text-muted-foreground">{farm.crop} · {farm.area_m2}m²</span>
         </div>
 
         {/* Table Header */}
         <div className="grid grid-cols-[1fr_100px_130px_80px_80px] px-5 py-2 border-b border-[hsl(var(--border))]/50 text-[11px] font-medium text-muted-foreground uppercase tracking-wider">
-          <span>Parameter</span>
-          <span className="text-right">Current</span>
-          <span className="text-right">Target Range</span>
-          <span className="text-right">Delta</span>
-          <span className="text-right">Status</span>
+          <span>{cr.parameter}</span>
+          <span className="text-right">{cr.current}</span>
+          <span className="text-right">{cr.targetRange}</span>
+          <span className="text-right">{cr.delta}</span>
+          <span className="text-right">{cr.statusCol}</span>
         </div>
 
         {/* Table Rows */}
@@ -370,7 +383,7 @@ function OverviewSection({
                 className="grid grid-cols-[1fr_100px_130px_80px_80px] px-5 py-3 border-b border-[hsl(var(--border))]/30 hover:bg-[hsl(var(--surface-2))]/40 transition-colors group"
               >
                 <div>
-                  <span className="text-sm text-foreground font-medium">{PARAM_LABELS[key]}</span>
+                  <span className="text-sm text-foreground font-medium">{paramLabelMap[key] || PARAM_LABELS[key]}</span>
                   <span className="text-[11px] text-muted-foreground ml-2 opacity-0 group-hover:opacity-100 transition-opacity">
                     {target.citation}
                   </span>
@@ -394,7 +407,7 @@ function OverviewSection({
                 </div>
                 <div className="text-right">
                   <Badge variant={inRange ? 'success' : 'error'}>
-                    {inRange ? 'OK' : 'ALERT'}
+                    {inRange ? cr.ok : cr.alert}
                   </Badge>
                 </div>
               </div>
@@ -402,9 +415,9 @@ function OverviewSection({
           })
         ) : (
           <div className="py-16 text-center">
-            <div className="text-sm text-muted-foreground mb-3">No sensor data available</div>
+            <div className="text-sm text-muted-foreground mb-3">{cr.noSensorData}</div>
             <div className="text-xs text-muted-foreground">
-              Click <span className="text-emerald-400 font-medium">Start Simulation</span> in the sidebar or connect the AI Engine via WebSocket.
+              {cr.noSensorDataHint} <span className="text-emerald-400 font-medium">{cr.startSimulation}</span> {cr.clickStartSim}
             </div>
           </div>
         )}
@@ -416,34 +429,35 @@ function OverviewSection({
 // ═══════════════════════════════════════════════════════
 // ROBOT SECTION (placeholder)
 // ═══════════════════════════════════════════════════════
-function RobotSection() {
+function RobotSection({ t }: { t: any }) {
+  const cr = t.controlRoom;
   return (
     <div className="rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-6">
-      <h3 className="text-sm font-semibold text-foreground mb-4">Robotics — Franka Panda Harvester</h3>
+      <h3 className="text-sm font-semibold text-foreground mb-4">{cr.robotTitle}</h3>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="p-4 rounded-md border border-[hsl(var(--border))]/50 bg-[hsl(var(--surface-2))]/30">
-          <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mb-2">Robot</div>
+          <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mb-2">{cr.robot}</div>
           <div className="text-sm font-medium text-foreground">Franka Panda</div>
           <div className="text-xs text-muted-foreground mt-1">7-DOF · 3kg payload · Gripper</div>
-          <div className="mt-3"><Badge variant="neutral">STANDBY</Badge></div>
+          <div className="mt-3"><Badge variant="neutral">{cr.standby}</Badge></div>
         </div>
         <div className="p-4 rounded-md border border-[hsl(var(--border))]/50 bg-[hsl(var(--surface-2))]/30">
-          <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mb-2">Vision</div>
+          <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mb-2">{cr.vision}</div>
           <div className="text-sm font-medium text-foreground">Intel RealSense D435</div>
           <div className="text-xs text-muted-foreground mt-1">RGB-D · 1280×720 · End-effector</div>
-          <div className="mt-3"><Badge variant="neutral">NOT CONNECTED</Badge></div>
+          <div className="mt-3"><Badge variant="neutral">{cr.notConnected}</Badge></div>
         </div>
         <div className="p-4 rounded-md border border-[hsl(var(--border))]/50 bg-[hsl(var(--surface-2))]/30">
-          <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mb-2">Isaac Sim</div>
-          <div className="text-sm font-medium text-foreground">Digital Twin</div>
+          <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mb-2">{cr.isaacSim}</div>
+          <div className="text-sm font-medium text-foreground">{cr.digitalTwin}</div>
           <div className="text-xs text-muted-foreground mt-1">USD: /World/Robot/FrankaPanda</div>
-          <div className="mt-3"><Badge variant="info">SIM READY</Badge></div>
+          <div className="mt-3"><Badge variant="info">{cr.simReady}</Badge></div>
         </div>
       </div>
       <div className="mt-6 p-4 rounded-md border border-dashed border-[hsl(var(--border))] text-center">
-        <div className="text-sm text-muted-foreground">Hardware-in-the-Loop bridge not connected</div>
+        <div className="text-sm text-muted-foreground">{cr.hilNotConnected}</div>
         <div className="text-xs text-muted-foreground mt-1">
-          Run Isaac Sim with <code className="text-emerald-400 font-mono text-[11px]">python.bat build_farm.py</code> to activate
+          {cr.hilHint} <code className="text-emerald-400 font-mono text-[11px]">python.bat build_farm.py</code>
         </div>
       </div>
     </div>
@@ -454,6 +468,8 @@ function RobotSection() {
 // MAIN DASHBOARD
 // ═══════════════════════════════════════════════════════
 export default function ControlRoomDashboard() {
+  const { t } = useI18n();
+  const cr = t.controlRoom;
   const [selectedFarmId, setSelectedFarmId] = useState(FARMS[0].id);
   const [live, setLive] = useState<LiveReadings | null>(null);
   const [connected, setConnected] = useState(false);
@@ -463,6 +479,13 @@ export default function ControlRoomDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const wsRef = useRef<WebSocket | null>(null);
   const simRef = useRef<NodeJS.Timeout | null>(null);
+
+  const SECTIONS_LOCAL: { key: Section; label: string }[] = [
+    { key: 'overview', label: cr.overview },
+    { key: 'energy',   label: cr.energy },
+    { key: 'bom',      label: cr.bom },
+    { key: 'robot',    label: cr.robotics },
+  ];
 
   const farm = FARMS.find(f => f.id === selectedFarmId)!;
 
@@ -550,9 +573,9 @@ export default function ControlRoomDashboard() {
 
   // Compliance
   const compliance = live ? Object.keys(farm.targets).filter(k => {
-    const t = farm.targets[k];
+    const tgt = farm.targets[k];
     const v = live[k as keyof LiveReadings] as number;
-    return v >= t.min && v <= t.max;
+    return v >= tgt.min && v <= tgt.max;
   }).length : 0;
   const total = Object.keys(farm.targets).length;
 
@@ -564,13 +587,14 @@ export default function ControlRoomDashboard() {
         selectedFarmId={selectedFarmId}
         onSelectFarm={handleSelectFarm}
         section={section}
-        onSelectSection={(s) => { setSection(s); setSidebarOpen(false); }}
+        onSelectSection={(s: Section) => { setSection(s); setSidebarOpen(false); }}
         connected={connected}
         simMode={simMode}
         onStartSim={startSim}
         onStopSim={stopSim}
         sidebarOpen={sidebarOpen}
         onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+        t={t}
       />
 
       {/* Main Content */}
@@ -592,7 +616,7 @@ export default function ControlRoomDashboard() {
             <span className="text-muted-foreground/50">/</span>
             <span className="text-sm text-foreground font-medium">{farm.name}</span>
             <span className="text-muted-foreground/50">/</span>
-            <span className="text-sm text-foreground">{SECTIONS.find(s => s.key === section)?.label}</span>
+            <span className="text-sm text-foreground">{SECTIONS_LOCAL.find(s => s.key === section)?.label}</span>
           </div>
           <div className="flex items-center gap-3">
             <span className="text-[11px] text-muted-foreground font-mono tabular-nums">
@@ -609,7 +633,7 @@ export default function ControlRoomDashboard() {
           <AnimatePresence mode="wait">
             {section === 'overview' && (
               <motion.div key="overview" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}>
-                <OverviewSection farm={farm} live={live} weather={weather} compliance={compliance} total={total} />
+                <OverviewSection farm={farm} live={live} weather={weather} compliance={compliance} total={total} t={t} />
               </motion.div>
             )}
             {section === 'energy' && (
@@ -624,7 +648,7 @@ export default function ControlRoomDashboard() {
             )}
             {section === 'robot' && (
               <motion.div key="robot" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}>
-                <RobotSection />
+                <RobotSection t={t} />
               </motion.div>
             )}
           </AnimatePresence>
