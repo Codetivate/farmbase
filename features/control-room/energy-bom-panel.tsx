@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useI18n } from '@/lib/i18n/i18n-context';
 
 // ═══════════════════════════════════════════════════════
 // BOM — Extracted from Isaac Sim build_farm.py LOD 400
@@ -91,19 +92,19 @@ interface OptimizePreset {
   changes: Record<string, Partial<{ hoursPerDay: number; wattage: number }>>;
 }
 
-const OPTIMIZE_PRESETS: OptimizePreset[] = [
+const OPTIMIZE_PRESETS_BASE = [
   {
-    id: 'eco', name: 'Eco Mode', description: 'ลด LED photoperiod เหลือ 12 ชม., AC night setback',
+    id: 'eco', nameKey: 'ecoMode' as const, descKey: 'ecoDesc' as const,
     icon: '🌿', savings: '~15%',
     changes: { LED: { hoursPerDay: 12 }, AC: { wattage: 650 } },
   },
   {
-    id: 'solar', name: 'Solar Ready', description: 'Shift pump/dosing ไปกลางวัน, peak shaving AC',
+    id: 'solar', nameKey: 'solarReady' as const, descKey: 'solarDesc' as const,
     icon: '☀️', savings: '~40% (w/ panels)',
     changes: { PUMP: { hoursPerDay: 6 }, AC: { wattage: 600 } },
   },
   {
-    id: 'night', name: 'Night Shift', description: 'LED ทำงานตอนกลางคืน (ค่าไฟ TOU ถูกกว่า)',
+    id: 'night', nameKey: 'nightShift' as const, descKey: 'nightDesc' as const,
     icon: '🌙', savings: '~25% cost',
     changes: { LED: { hoursPerDay: 14 } },
   },
@@ -112,8 +113,9 @@ const OPTIMIZE_PRESETS: OptimizePreset[] = [
 // ═══════════════════════════════════════════════════════
 // ENERGY MONITOR COMPONENT
 // ═══════════════════════════════════════════════════════
-function EnergyGauge({ kwhToday, kwhMonth, costMonth, solarPct }: {
+function EnergyGauge({ kwhToday, kwhMonth, costMonth, solarPct, eb }: {
   kwhToday: number; kwhMonth: number; costMonth: number; solarPct: number;
+  eb: any;
 }) {
   const maxMonth = 1000; // scale
   const pct = Math.min(100, (kwhMonth / maxMonth) * 100);
@@ -121,9 +123,9 @@ function EnergyGauge({ kwhToday, kwhMonth, costMonth, solarPct }: {
   return (
     <div className="rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-5 space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-bold text-foreground flex items-center gap-2">⚡ Energy Monitor</h3>
+        <h3 className="text-sm font-bold text-foreground flex items-center gap-2">{eb.energyMonitor}</h3>
         <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">
-          LIVE
+          {eb.live}
         </span>
       </div>
 
@@ -131,22 +133,22 @@ function EnergyGauge({ kwhToday, kwhMonth, costMonth, solarPct }: {
       <div className="grid grid-cols-3 gap-3">
         <div className="text-center p-3 rounded-xl bg-[hsl(var(--surface-2))]/50 border border-[hsl(var(--border))]/30">
           <div className="text-2xl font-black text-foreground">{kwhToday.toFixed(1)}</div>
-          <div className="text-[10px] text-muted-foreground mt-0.5">kWh วันนี้</div>
+          <div className="text-[10px] text-muted-foreground mt-0.5">{eb.kwhToday}</div>
         </div>
         <div className="text-center p-3 rounded-xl bg-[hsl(var(--surface-2))]/50 border border-[hsl(var(--border))]/30">
           <div className="text-2xl font-black text-amber-400">{kwhMonth.toFixed(0)}</div>
-          <div className="text-[10px] text-muted-foreground mt-0.5">kWh/เดือน (คาด)</div>
+          <div className="text-[10px] text-muted-foreground mt-0.5">{eb.kwhMonth}</div>
         </div>
         <div className="text-center p-3 rounded-xl bg-[hsl(var(--surface-2))]/50 border border-[hsl(var(--border))]/30">
           <div className="text-2xl font-black text-red-400">฿{costMonth.toLocaleString()}</div>
-          <div className="text-[10px] text-muted-foreground mt-0.5">ค่าไฟ/เดือน (คาด)</div>
+          <div className="text-[10px] text-muted-foreground mt-0.5">{eb.costMonth}</div>
         </div>
       </div>
 
       {/* Power breakdown bar */}
       <div className="space-y-2">
         <div className="flex justify-between text-[10px] text-muted-foreground">
-          <span>Power Breakdown</span>
+          <span>{eb.powerBreakdown}</span>
           <span>{kwhMonth.toFixed(0)} / {maxMonth} kWh</span>
         </div>
         <div className="h-3 rounded-full bg-[hsl(var(--surface-2))] overflow-hidden flex">
@@ -166,8 +168,8 @@ function EnergyGauge({ kwhToday, kwhMonth, costMonth, solarPct }: {
         <div className="flex items-center gap-2">
           <span className="text-lg">☀️</span>
           <div>
-            <div className="text-xs font-semibold text-foreground">Solar Offset</div>
-            <div className="text-[10px] text-muted-foreground">Grid → Solar switching</div>
+            <div className="text-xs font-semibold text-foreground">{eb.solarOffset}</div>
+            <div className="text-[10px] text-muted-foreground">{eb.solarSwitching}</div>
           </div>
         </div>
         <div className="flex items-center gap-2">
@@ -187,6 +189,8 @@ function EnergyGauge({ kwhToday, kwhMonth, costMonth, solarPct }: {
 // MAIN EXPORT
 // ═══════════════════════════════════════════════════════
 export default function EnergyBomPanel({ initialTab = 'energy' }: { initialTab?: 'energy' | 'bom' }) {
+  const { t } = useI18n();
+  const eb = t.energyBom;
   const [bom, setBom] = useState<BOMItem[]>(DEFAULT_BOM);
   const [activePreset, setActivePreset] = useState<string | null>(null);
   const [elecRate, setElecRate] = useState(4.5); // baht per kWh
@@ -218,14 +222,14 @@ export default function EnergyBomPanel({ initialTab = 'energy' }: { initialTab?:
   const todayKwh = dailyKwh * (hoursPassed / 24) + (Math.sin(tick * 0.3) * 0.5);
 
   // Apply optimize preset
-  const applyPreset = (preset: OptimizePreset) => {
+  const applyPreset = (preset: typeof OPTIMIZE_PRESETS_BASE[number]) => {
     if (activePreset === preset.id) {
       setBom(DEFAULT_BOM);
       setActivePreset(null);
       return;
     }
     const updated = DEFAULT_BOM.map(item => {
-      const change = preset.changes[item.id];
+      const change = (preset.changes as Record<string, any>)[item.id];
       if (change) return { ...item, ...change };
       return { ...item };
     });
@@ -243,8 +247,8 @@ export default function EnergyBomPanel({ initialTab = 'energy' }: { initialTab?:
       {/* Tab Switch */}
       <div className="flex gap-2">
         {[
-          { key: 'energy' as const, label: '⚡ Energy', desc: 'Power Monitor' },
-          { key: 'bom' as const, label: '📋 BOM', desc: 'Bill of Materials' },
+          { key: 'energy' as const, label: eb.tabEnergy, desc: eb.tabEnergyDesc },
+          { key: 'bom' as const, label: eb.tabBom, desc: eb.tabBomDesc },
         ].map(t => (
           <button key={t.key} onClick={() => setTab(t.key)}
             className={`relative flex items-center gap-2 px-4 py-2.5 rounded-xl text-left transition-all border ${
@@ -276,13 +280,14 @@ export default function EnergyBomPanel({ initialTab = 'energy' }: { initialTab?:
               kwhMonth={monthlyKwh}
               costMonth={monthlyCost}
               solarPct={activePreset === 'solar' ? 45 : 0}
+              eb={eb}
             />
 
             {/* Optimize Presets */}
             <div className="rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-5 space-y-3">
-              <h3 className="text-sm font-bold text-foreground flex items-center gap-2">🎯 Optimize</h3>
+              <h3 className="text-sm font-bold text-foreground flex items-center gap-2">{eb.optimize}</h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {OPTIMIZE_PRESETS.map(p => (
+                {OPTIMIZE_PRESETS_BASE.map(p => (
                   <button key={p.id} onClick={() => applyPreset(p)}
                     className={`text-left p-3 rounded-xl border transition-all ${
                       activePreset === p.id
@@ -291,13 +296,13 @@ export default function EnergyBomPanel({ initialTab = 'energy' }: { initialTab?:
                     }`}>
                     <div className="flex items-center gap-2 mb-1">
                       <span className="text-lg">{p.icon}</span>
-                      <span className="text-xs font-bold text-foreground">{p.name}</span>
+                      <span className="text-xs font-bold text-foreground">{eb[p.nameKey]}</span>
                     </div>
-                    <p className="text-[10px] text-muted-foreground leading-snug mb-2">{p.description}</p>
+                    <p className="text-[10px] text-muted-foreground leading-snug mb-2">{eb[p.descKey]}</p>
                     <div className={`inline-flex text-[10px] font-bold px-2 py-0.5 rounded-full ${
                       activePreset === p.id ? 'bg-emerald-500/20 text-emerald-400' : 'bg-primary/10 text-primary'
                     }`}>
-                      {activePreset === p.id ? '✓ Active' : `Save ${p.savings}`}
+                      {activePreset === p.id ? eb.active : `${eb.save} ${p.savings}`}
                     </div>
                   </button>
                 ))}
@@ -306,7 +311,7 @@ export default function EnergyBomPanel({ initialTab = 'energy' }: { initialTab?:
 
             {/* Per-device power table */}
             <div className="rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-5 space-y-3">
-              <h3 className="text-sm font-bold text-foreground flex items-center gap-2">📊 Device Power</h3>
+              <h3 className="text-sm font-bold text-foreground flex items-center gap-2">{eb.devicePower}</h3>
               <div className="space-y-1">
                 {bom.filter(i => i.wattage).map(item => {
                   const itemKwh = (item.wattage! * item.qty * (item.hoursPerDay || 0)) / 1000;
@@ -330,13 +335,13 @@ export default function EnergyBomPanel({ initialTab = 'energy' }: { initialTab?:
               </div>
               {/* Electricity rate */}
               <div className="flex items-center gap-3 pt-2 border-t border-[hsl(var(--border))]/30">
-                <span className="text-[10px] text-muted-foreground">ค่าไฟ/unit:</span>
+                <span className="text-[10px] text-muted-foreground">{eb.elecRateLabel}</span>
                 <input
                   type="number" step="0.1" value={elecRate}
                   onChange={e => setElecRate(parseFloat(e.target.value) || 0)}
                   className="w-16 text-xs px-2 py-1 rounded-lg bg-[hsl(var(--surface-2))] border border-[hsl(var(--border))] text-foreground text-center"
                 />
-                <span className="text-[10px] text-muted-foreground">บาท/kWh</span>
+                <span className="text-[10px] text-muted-foreground">{eb.elecRateUnit}</span>
               </div>
             </div>
           </motion.div>
@@ -348,10 +353,10 @@ export default function EnergyBomPanel({ initialTab = 'energy' }: { initialTab?:
             {/* Total cost card */}
             <div className="rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-5">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="text-sm font-bold text-foreground">📋 Bill of Materials — Isaac Sim LOD 400</h3>
+                <h3 className="text-sm font-bold text-foreground">{eb.bomTitle}</h3>
                 <div className="text-right">
                   <div className="text-xl font-black text-foreground">฿{totalCost.toLocaleString()}</div>
-                  <div className="text-[10px] text-muted-foreground">{bom.length} items · แก้ราคาได้</div>
+                  <div className="text-[10px] text-muted-foreground">{bom.length} {eb.itemsEditable}</div>
                 </div>
               </div>
 
@@ -414,7 +419,7 @@ export default function EnergyBomPanel({ initialTab = 'energy' }: { initialTab?:
 
               {/* Cost breakdown bar */}
               <div className="mt-4 pt-3 border-t border-[hsl(var(--border))]/30 space-y-2">
-                <div className="text-[10px] text-muted-foreground">Cost by Category</div>
+                <div className="text-[10px] text-muted-foreground">{eb.costByCategory}</div>
                 <div className="h-4 rounded-full overflow-hidden flex">
                   {categories.map((cat, i) => {
                     const catTotal = bom.filter(b => b.category === cat).reduce((s, b) => s + b.qty * b.unitPrice, 0);

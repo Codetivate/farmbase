@@ -395,6 +395,35 @@ export interface Translations {
     rain: string;
     storm: string;
   };
+  energyBom: {
+    tabEnergy: string;
+    tabEnergyDesc: string;
+    tabBom: string;
+    tabBomDesc: string;
+    energyMonitor: string;
+    live: string;
+    kwhToday: string;
+    kwhMonth: string;
+    costMonth: string;
+    powerBreakdown: string;
+    solarOffset: string;
+    solarSwitching: string;
+    optimize: string;
+    active: string;
+    save: string;
+    devicePower: string;
+    elecRateLabel: string;
+    elecRateUnit: string;
+    bomTitle: string;
+    itemsEditable: string;
+    costByCategory: string;
+    ecoMode: string;
+    ecoDesc: string;
+    solarReady: string;
+    solarDesc: string;
+    nightShift: string;
+    nightDesc: string;
+  };
 }
 
 export const th: Translations = {
@@ -554,7 +583,7 @@ export const th: Translations = {
     headFormationDesc: 'แสง Far-red 730nm (50 µmol/m²/s) เพิ่ม Brix 12% โดยกระตุ้นยีนขนส่งน้ำตาลเข้าผล (Ries 2024) ฉาย UV-C ทันทีหลังปิดไฟ ฆ่าสปอร์ราแป้งลดเคมี 100% (Suthaparan 2020) รักษา VPD > 0.8 kPa ป้องกันใบไหม้ปลาย (Bradfield 1979)',
     harvestVegetableDesc: 'แสง Far-red ช่วยยืดก้านผล 62% ทำให้หุ่นยนต์ตรวจจับง่ายขึ้น (Ries 2024) เข้าสู่รอบเก็บเกี่ยวแรกวันที่ 85-90 เก็บซ้ำทุก 3-4 วัน ผลผลิต 8.5 กก./ตร.ม./ปี (Takahashi 2024) ผลผลิตเพิ่ม 48% กับ FR LED:',
     postHarvest: 'ดูแลหลังเก็บเกี่ยว (Post-Harvest Care)',
-    postHarvestDesc: 'ไม่ต้องถอนต้นทิ้ง! Pre-cool 1-4°C ภายใน 1 ชม. จัดเก็บ MAP (O₂ 5-10%, CO₂ 15-20%) ยืดอายุ 7-10 วัน (Priyadarshi 2024) ต้นแม่: ตัดใบเก่า ปุ๋ยฟื้นฟู N/K=1.5 พัก 1-2 สัปดาห์ แล้วกระตุ้นดอกรอบใหม่',
+    postHarvestDesc: 'ไม่ต้องถอนต้นทิ้ง! Pre-cool 1-4°C ภายใน 1 ชม. จัดเก็บ MAP (O₂ 5-10%, CO₂ 15-20%) ยืดอายุ 7-10 วัน (Priyadarshi 2024) ต้นแม่: ตัดใบเก่า ปุ๋ยฟื้นฟู N/K=1.5 พัก 1-2 สัปดาห์ แล้วกระตุ้นดอกรอบใหม่ 📅 อายุสูงสุดต่อต้น: เก็บเกี่ยวได้ต่อเนื่อง  8-10 เดือน (ประมาณ 3 รอบการเก็บเกี่ยว × 90 วัน) จากนั้นผลผลิตและคุณภาพจะลดลง ควรเปลี่ยนต้นกล้าใหม่จากไหลปลอดโรค (Tissue Culture) อ้างอิงการปลูกแบบไล่ Forcing Culture ของญี่ปุ่น (พฤศจิกายน-มิถุนายน)',
   },
   environment: {
     title: 'ควบคุมสภาพแวดล้อม',
@@ -829,6 +858,35 @@ export const th: Translations = {
     rain: 'ฝนตก',
     storm: 'พายุ',
   },
+  energyBom: {
+    tabEnergy: '⚡ พลังงาน',
+    tabEnergyDesc: 'ตรวจสอบการใช้ไฟฟ้า',
+    tabBom: '📋 รายการวัสดุ',
+    tabBomDesc: 'รายการวัสดุทั้งหมด',
+    energyMonitor: '⚡ ตรวจสอบพลังงาน',
+    live: 'LIVE',
+    kwhToday: 'kWh วันนี้',
+    kwhMonth: 'kWh/เดือน (คาด)',
+    costMonth: 'ค่าไฟ/เดือน (คาด)',
+    powerBreakdown: 'สัดส่วนการใช้พลังงาน',
+    solarOffset: 'ชดเชยโซลาร์',
+    solarSwitching: 'ไฟฟ้า → โซลาร์',
+    optimize: '🎯 ปรับแต่ง',
+    active: '✓ ใช้งานอยู่',
+    save: 'ประหยัด',
+    devicePower: '📊 กำลังไฟต่ออุปกรณ์',
+    elecRateLabel: 'ค่าไฟ/unit:',
+    elecRateUnit: 'บาท/kWh',
+    bomTitle: '📋 รายการวัสดุ — Isaac Sim LOD 400',
+    itemsEditable: 'รายการ · แก้ราคาได้',
+    costByCategory: 'ต้นทุนตามหมวดหมู่',
+    ecoMode: 'Eco Mode',
+    ecoDesc: 'ลด LED photoperiod เหลือ 12 ชม., AC night setback',
+    solarReady: 'Solar Ready',
+    solarDesc: 'Shift pump/dosing ไปกลางวัน, peak shaving AC',
+    nightShift: 'Night Shift',
+    nightDesc: 'LED ทำงานตอนกลางคืน (ค่าไฟ TOU ถูกกว่า)',
+  },
 };
 
 
@@ -989,7 +1047,7 @@ export const en: Translations = {
     headFormationDesc: 'Far-red 730nm (50 µmol/m²/s) increases Brix by 12% by upregulating fruit sugar transport genes and sink strength (Ries 2024). UV-C immediately after lights-off kills powdery mildew spores without chemicals (Suthaparan 2020). Maintain VPD > 0.8 kPa to prevent tip-burn (Bradfield 1979).',
     harvestVegetableDesc: 'Far-red extends peduncle length by 62%, improving robotic harvest detection (Ries 2024). First harvest Day 85-90. Pick every 3-4 days. Yield: 8.5 kg/m²/yr (Takahashi 2024). FR-LED boosts total fruit yield by 48%. Expected yield:',
     postHarvest: 'Post-Harvest Care',
-    postHarvestDesc: 'Do NOT uproot! Pre-cool to 1-4°C within 1h. Store with MAP (O₂ 5-10%, CO₂ 15-20%) for 7-10 day shelf life (Priyadarshi 2024). Mother plants: prune old leaves, apply recovery N/K=1.5 formula, rest 1-2 weeks, then re-induce flowering for continuous production.',
+    postHarvestDesc: 'Do NOT uproot! Pre-cool to 1-4°C within 1h. Store with MAP (O₂ 5-10%, CO₂ 15-20%) for 7-10 day shelf life (Priyadarshi 2024). Mother plants: prune old leaves, apply recovery N/K=1.5 formula, rest 1-2 weeks, then re-induce flowering. 📅 Max plant lifespan: continuous harvest for 8-10 months (~3 harvest cycles × 90 days). After that, yield and fruit quality decline significantly. Replace with fresh tissue-culture crowns. Referenced: Japanese forcing culture protocol (Nov–Jun harvest window).',
   },
   environment: {
     title: 'Environment Controls',
@@ -1244,6 +1302,35 @@ export const en: Translations = {
     foggy: 'Foggy',
     rain: 'Rain',
     storm: 'Storm',
+  },
+  energyBom: {
+    tabEnergy: '⚡ Energy',
+    tabEnergyDesc: 'Power Monitor',
+    tabBom: '📋 BOM',
+    tabBomDesc: 'Bill of Materials',
+    energyMonitor: '⚡ Energy Monitor',
+    live: 'LIVE',
+    kwhToday: 'kWh today',
+    kwhMonth: 'kWh/month (est)',
+    costMonth: 'Cost/month (est)',
+    powerBreakdown: 'Power Breakdown',
+    solarOffset: 'Solar Offset',
+    solarSwitching: 'Grid → Solar switching',
+    optimize: '🎯 Optimize',
+    active: '✓ Active',
+    save: 'Save',
+    devicePower: '📊 Device Power',
+    elecRateLabel: 'Rate/unit:',
+    elecRateUnit: 'THB/kWh',
+    bomTitle: '📋 Bill of Materials — Isaac Sim LOD 400',
+    itemsEditable: 'items · editable prices',
+    costByCategory: 'Cost by Category',
+    ecoMode: 'Eco Mode',
+    ecoDesc: 'Reduce LED photoperiod to 12h, AC night setback',
+    solarReady: 'Solar Ready',
+    solarDesc: 'Shift pump/dosing to daytime, peak shaving AC',
+    nightShift: 'Night Shift',
+    nightDesc: 'LED runs at night (cheaper TOU electricity)',
   },
 };
 
