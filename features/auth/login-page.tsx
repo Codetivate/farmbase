@@ -110,7 +110,6 @@ export default function LoginPage() {
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500 to-emerald-500 flex items-center justify-center shadow-lg shadow-cyan-500/20">
                   <FlaskConical size={24} className="text-white" />
                 </div>
-                <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-emerald-400 border-[3px] border-card animate-pulse" />
               </div>
             </motion.div>
 

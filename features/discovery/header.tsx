@@ -136,12 +136,7 @@ export default function Header() {
 
           {user ? (
             <>
-              <button
-                onClick={() => setViewMode(viewMode === 'papers' && isAdmin ? 'marketplace' : isAdmin ? 'papers' : 'marketplace')}
-                className="p-2 rounded-lg hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors sm:hidden"
-              >
-                {viewMode === 'papers' ? <Sprout size={16} /> : isAdmin ? <FileSearch size={16} /> : null}
-              </button>
+              {/* Removed mobile toggle icon per user request (cluttered) */}
 
               <div ref={menuRef} className="relative">
                 <button
